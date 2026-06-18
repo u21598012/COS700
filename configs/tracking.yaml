@@ -1,0 +1,41 @@
+# NOTE: experiment.yaml (tracking_uri / experiment_name) takes precedence over
+# this section; these are fallbacks. Keep them in sync.
+mlflow:
+
+  tracking_uri: sqlite:///mlflow.db
+
+  experiment_name: MITBIH_RS
+
+database:
+
+  sqlite_path: results/database/results.db
+
+artifacts:
+
+  root_dir: results
+
+  models_dir: results/models
+
+  architectures_dir: results/architectures
+
+  predictions_dir: results/predictions
+
+  plots_dir: results/plots
+
+  logs_dir: results/logs
+
+exports:
+
+  runs_csv: results/csv/runs.csv
+
+  evaluations_csv: results/csv/evaluations.csv
+
+resource_tracking:
+
+  monitor_ram: true
+
+  monitor_gpu: true
+
+  monitor_cpu: true
+
+  sample_interval_seconds: 1
