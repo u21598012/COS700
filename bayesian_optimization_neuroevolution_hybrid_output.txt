@@ -1,0 +1,33 @@
+================================================================================
+Hybrid search: budget=10, bo_fraction=0.4 -> 4 Bayesian trials
+================================================================================ 
+
+    training 5-layer model (lr=8.35e-03)...
+[eval 1] -> macro_f1=0.1811 acc=0.8277  (417.9s train)
+    training 3-layer model (lr=1.48e-03)...
+[eval 2] -> macro_f1=0.8827 acc=0.9784  (560.2s train)
+    training 4-layer model (lr=4.88e-03)...
+[eval 3] -> macro_f1=0.1811 acc=0.8277  (446.3s train)
+    training 5-layer model (lr=2.43e-04)...
+[eval 4] -> macro_f1=0.8439 acc=0.9679  (362.0s train)
+
+================================================================================
+bay_opt_outcomes (4 seeds, failed trials excluded)
+================================================================================
+  id=2185567188176  macro_f1=0.8827
+    ArchitectureConfig(learning_rate=0.0014816254936676765, num_layers=3, layers=[LayerConfig(layer_type='LSTM', hidden_size=161, dropout=0.267622195224764, activation='relu', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=188, dropout=0.2943531289265141, activation='tanh', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=173, dropout=0.1280592755804632, activation='relu', kernel_size=None, bidirectional=False, pooling=None)])
+
+  id=2194686794656  macro_f1=0.8439
+    ArchitectureConfig(learning_rate=0.00024257377155787152, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=123, dropout=0.391634117082738, activation='tanh', kernel_size=3, bidirectional=None, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=167, dropout=0.008040489237698789, activation='elu', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='CNN', hidden_size=115, dropout=0.42499934937937744, activation='relu', kernel_size=3, bidirectional=None, pooling=None), LayerConfig(layer_type='CNN', hidden_size=85, dropout=0.09493586901446655, activation='relu', kernel_size=3, bidirectional=None, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=210, dropout=0.07050372346499906, activation='relu', kernel_size=None, bidirectional=False, pooling=None)])
+
+  id=2185567141376  macro_f1=0.1811
+    ArchitectureConfig(learning_rate=0.008352745844827043, num_layers=5, layers=[LayerConfig(layer_type='GRU', hidden_size=225, dropout=0.16586263720325428, activation='relu', kernel_size=None, bidirectional=False, pooling=None), LayerConfig(layer_type='GRU', hidden_size=217, dropout=0.4126323929768629, activation='tanh', kernel_size=None, bidirectional=False, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=91, dropout=0.3989788753070796, activation='tanh', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=255, dropout=0.12790993398987643, activation='relu', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='CNN', hidden_size=46, dropout=0.13295385572338464, activation='relu', kernel_size=3, bidirectional=None, pooling=None)])
+
+  id=2185567187536  macro_f1=0.1811
+    ArchitectureConfig(learning_rate=0.004875338356137614, num_layers=4, layers=[LayerConfig(layer_type='GRU', hidden_size=181, dropout=0.15839957110805275, activation='relu', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=127, dropout=0.3885444516069888, activation='elu', kernel_size=None, bidirectional=False, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=234, dropout=0.2957464349419926, activation='elu', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='CNN', hidden_size=26, dropout=0.29542106573333077, activation='tanh', kernel_size=5, bidirectional=None, pooling=None)])
+
+================================================================================
+Best architecture (eval #2): ArchitectureConfig(learning_rate=0.0014816254936676765, num_layers=3, layers=[LayerConfig(layer_type='LSTM', hidden_size=161, dropout=0.267622195224764, activation='relu', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=188, dropout=0.2943531289265141, activation='tanh', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=173, dropout=0.1280592755804632, activation='relu', kernel_size=None, bidirectional=False, pooling=None)])
+Best fitness: EvaluationResult(accuracy=0.9784135686140141, precision=0.9008323837330066, recall=0.8735986193542932, macro_f1=0.8826601160328396, training_time=560.2149461999943, inference_time=6.588766599976225, avg_cpu=71.89496402877698, peak_cpu=551.2, avg_ram_mb=1314.1631850853548, peak_ram_mb=1531.93359375, peak_gpu_mb=1063.10107421875, peak_memory_mb=1531.93359375, failed=False, error=None)
+Time to best: 989.5s
+Total evaluations: 4, total search time: 1805.8s
