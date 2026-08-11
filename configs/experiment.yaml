@@ -1,7 +1,8 @@
 experiment_name: MITBIH_RS
 tracking_uri: sqlite:///mlflow.db
 
-algorithm: random_search
+# algorithm: random_search
+algorithm: neuroevolution
 
 # Metric used to pick the best candidate within a run (field of EvaluationResult).
 selection_metric: macro_f1
@@ -9,28 +10,28 @@ selection_metric: macro_f1
 runs: 30
 
 seeds:
-  - 5912847
-  - 1384225
-  - 6103771
-  - 482916
-  - 2947183
-  - 5026490
-  - 3771654
-  - 128503
-  - 6521908
-  - 2214775
-  - 4638192
-  - 875441
-  - 5487026
-  - 3092518
-  - 1761334
-  - 6248910
-  - 4102673
-  - 567829
-  - 2839145
-  - 5774201
-  - 3458990
-  - 1092684
+  # - 5912847
+  # - 1384225
+  # - 6103771
+  # - 482916
+  # - 2947183
+  # - 5026490
+  # - 3771654
+  # - 128503
+  # - 6521908
+  # - 2214775
+  # - 4638192
+  # - 875441
+  # - 5487026
+  # - 3092518
+  # - 1761334
+  # - 6248910
+  # - 4102673
+  # - 567829
+  # - 2839145
+  # - 5774201
+  # - 3458990
+  # - 1092684
   - 6011572
   - 4825337
   - 219764
@@ -42,7 +43,7 @@ seeds:
 
 budget:
 
-  evaluations: 10
+  evaluations: 50
 
 training:
 
