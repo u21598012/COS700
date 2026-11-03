@@ -1,0 +1,48 @@
+global:
+
+  learning_rate:
+    min: 0.0001
+    max: 0.01
+
+  num_layers:
+    min: 1
+    max: 5
+
+layer:
+
+  type:
+    choices:
+      - CNN
+      - LSTM
+      - GRU
+
+  hidden_size:
+    min: 16
+    max: 256
+
+  dropout:
+    min: 0.0
+    max: 0.5
+
+  activation:
+    choices:
+      - relu
+      - tanh
+      - elu
+
+  kernel_size:
+    choices:
+      - 3
+      - 5
+      - 7
+
+  bidirectional:
+    choices:
+      - true
+      - false
+
+  pooling:
+    choices:
+      - null
+      - max
+      - avg
