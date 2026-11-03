@@ -1,17 +1,4 @@
-"""Permutation smoke test for the block builder.
 
-Builds a model for EVERY ordered combination of block types and runs a forward
-(and a quick backward) pass on a dummy batch, asserting the output is the
-expected ``(batch, num_classes)`` logits. This proves any sequence the search
-space can sample produces a valid, trainable model.
-
-With DEPTHS = [1, 2, 3] and the 3 block types that is 3 + 3^2 + 3^3 = 39 models;
-restrict to DEPTHS = [3] for the headline 3x3x3 = 27 combinations.
-
-Run it (from the repo root, using the project venv):
-
-    ./venv/Scripts/python.exe src/models/main.py
-"""
 
 import itertools
 import sys
@@ -19,7 +6,6 @@ from pathlib import Path
 
 import torch
 
-# Make ``import src...`` work when run directly as a script.
 REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
@@ -27,25 +13,19 @@ if str(REPO_ROOT) not in sys.path:
 from src.models.architecture import ArchitectureConfig, LayerConfig
 from src.models.architecture_builder import build_model
 
-# ---------------------------------------------------------------------------
-# Adjust these and re-run.
-# ---------------------------------------------------------------------------
 BLOCK_TYPES = ["CNN", "LSTM", "GRU"]
-DEPTHS = [1, 2, 3]          # sequence lengths to test; [3] -> the 3x3x3 = 27 case
-POOLING_MODES = [None, "max", "avg"]   # every combo is tested under each
+DEPTHS = [1, 2, 3]          
+POOLING_MODES = [None, "max", "avg"]  
 BATCH = 8
-INPUT_DIM = 187             # MIT-BIH beat length
+INPUT_DIM = 187            
 NUM_CLASSES = 5
 HIDDEN_SIZE = 16
 KERNEL_SIZE = 3
 DROPOUT = 0.1
 ACTIVATION = "relu"
-BIDIRECTIONAL = True        # exercises the channel-doubling path for RNN blocks
-# ---------------------------------------------------------------------------
-
+BIDIRECTIONAL = True        
 
 def make_layer(layer_type, pooling):
-    """One LayerConfig per type with every relevant field populated."""
     return LayerConfig(
         layer_type=layer_type,
         hidden_size=HIDDEN_SIZE,
@@ -58,7 +38,6 @@ def make_layer(layer_type, pooling):
 
 
 def check_combo(types, pooling):
-    """Build, forward, and backward one architecture; return (ok, detail)."""
     arch = ArchitectureConfig(
         learning_rate=1e-3,
         num_layers=len(types),
@@ -75,7 +54,6 @@ def check_combo(types, pooling):
     if not torch.isfinite(logits).all():
         return False, "non-finite values in output"
 
-    # A quick backward proves the chain is differentiable end to end.
     loss = logits.sum()
     loss.backward()
 

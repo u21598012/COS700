@@ -1,11 +1,3 @@
-"""Top-level experiment orchestration (framework spec, section 2).
-
-Implements the full execution sequence:
-
-    Load config -> load dataset -> load fixed splits -> init DB -> init MLflow
-    -> for each seed: set seed, create run, execute search, log, save best,
-       close run -> export results.
-"""
 
 import uuid
 
@@ -27,14 +19,8 @@ class ExperimentManager:
         self.device = get_device(device)
         self.db_path = db_path
 
-    # ------------------------------------------------------------------
     def setup(self):
-        """Create directories, DB, MLflow experiment, and verify the fixed splits.
-
-        Splits are NEVER created here - the framework only loads existing split
-        files. Create ``data/splits/{train,val,test}_idx.npy`` once yourself before
-        running.
-        """
+       
         paths.ensure_dirs()
         artifact_manager.initialize_artifacts()
         database.initialize_database(self.db_path)
@@ -61,9 +47,7 @@ class ExperimentManager:
         )
         return loaders, meta
 
-    # ------------------------------------------------------------------
     def run(self, verbose=True):
-        """Run the configured algorithm across every seed. Returns run summaries."""
         algorithm_name = self.experiment_cfg.get("algorithm", "random_search")
         if algorithm_name not in ALGORITHMS:
             raise ValueError(f"Unknown algorithm '{algorithm_name}'.")

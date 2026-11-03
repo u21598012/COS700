@@ -1,11 +1,3 @@
-"""Base class every search algorithm implements.
-
-The contract is intentionally tiny so Random Search, Bayesian Optimization,
-Neuroevolution and the Hybrid all share the identical evaluation + logging
-infrastructure (framework spec, section 17). An algorithm only decides *which*
-architectures to try; building/training/logging is handled elsewhere and passed
-in as callbacks.
-"""
 
 import time
 from dataclasses import dataclass, field
@@ -14,7 +6,6 @@ from typing import Callable, List, Optional
 
 @dataclass
 class SearchOutcome:
-    """Everything a run needs to know after a search finishes."""
 
     best_architecture: Optional[object] = None
     best_result: Optional[object] = None
@@ -25,18 +16,7 @@ class SearchOutcome:
 
 
 class BaseAlgorithm:
-    """Subclasses implement :meth:`search`.
-
-    Parameters
-    ----------
-    search_space : SearchSpace
-        Produces candidate architectures / bounds.
-    budget : int
-        Number of architectures to evaluate.
-    selection_metric : str
-        Field of EvaluationResult used to pick "best" (default macro_f1).
-    """
-
+    
     name = "base"
 
     def __init__(self, search_space, budget, selection_metric="macro_f1"):
@@ -44,21 +24,19 @@ class BaseAlgorithm:
         self.budget = budget
         self.selection_metric = selection_metric
 
+    def set_run_context(self, run_id, seed):
+       
+        return self
+
     def _score(self, result):
         if result is None or getattr(result, "failed", False):
             return float("-inf")
         return getattr(result, self.selection_metric, float("-inf"))
 
     def search(self, evaluate_fn: Callable, on_evaluation: Optional[Callable] = None) -> SearchOutcome:
-        """Run the search loop.
-
-        ``evaluate_fn(architecture) -> EvaluationResult``
-        ``on_evaluation(eval_number, architecture, result)`` is called after each
-        evaluation (used by the Runner to log to the DB + MLflow).
-        """
+       
         raise NotImplementedError
 
-    # Shared helper so subclasses don't duplicate best-tracking/timing logic.
     def _run_loop(self, candidate_iter, evaluate_fn, on_evaluation):
         outcome = SearchOutcome()
         best_score = float("-inf")

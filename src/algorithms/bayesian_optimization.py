@@ -1,11 +1,3 @@
-"""Bayesian Optimization search via Optuna (TPE sampler).
-
-Optuna owns the suggest-evaluate loop. Each trial proposes a full
-ArchitectureConfig by sampling from the same bounds the SearchSpace exposes,
-then calls the shared evaluate_fn so training/logging are identical to every
-other algorithm.
-"""
-
 import time
 
 import optuna

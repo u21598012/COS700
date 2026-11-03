@@ -1,9 +1,3 @@
-"""Neuroevolution search (placeholder).
-
-Implement the evolutionary loop here later (population, mutation/crossover over
-ArchitectureConfig, selection). Reuse ``self._run_loop`` / the injected
-``evaluate_fn`` so logging stays identical across algorithms.
-"""
 
 from src.algorithms.base_algorithm import BaseAlgorithm, SearchOutcome
 import copy
@@ -18,21 +12,17 @@ class Neuroevolution(BaseAlgorithm):
 
     def __init__(self, search_space, budget, selection_metric="macro_f1"):
         super().__init__(search_space, budget, selection_metric)
-        # Per-instance state. Previously these were class attributes, which meant
-        # every Neuroevolution instance shared the SAME dict/population.
+       
         self.population = []
         self.population_metadata = {}
         self.best_architecture = None
-        # Target population size steady-state replacement trims back to. Set by
-        # generate_population; NOT self.budget (which is the total eval budget).
+        
         self.population_size = budget
-        # Verbose debug logging off by default so the experiment Runner's own
-        # per-evaluation logging isn't flooded. The __main__ block turns it on.
+       
         self.verbose = False
         self._reset_tracking()
 
     def _reset_tracking(self):
-        """Reset the SearchOutcome bookkeeping for a fresh search."""
         self._outcome = SearchOutcome()
         self._eval_count = 0
         self._best_score = float("-inf")
@@ -43,16 +33,14 @@ class Neuroevolution(BaseAlgorithm):
             print(*args, **kwargs)
 
     def generate_population(self, population_size):
-        # A list (not a generator) so it can be iterated more than once and
-        # supports append/remove for steady-state replacement.
+       
         self.population_size = population_size
         self.population = [self.search_space.sample_architecture() for _ in range(population_size)]
 
     def evaluate_architecture(self, architecture, evaluate_fn, on_evaluation):
         result = evaluate_fn(architecture)
 
-        # Give the evaluation a real, incrementing number and record it in the
-        # SearchOutcome (best-tracking + history), mirroring BaseAlgorithm._run_loop.
+      
         self._eval_count += 1
         eval_number = self._eval_count
         elapsed = time.perf_counter() - self._start
@@ -84,11 +72,7 @@ class Neuroevolution(BaseAlgorithm):
             self.population_metadata[id(architecture)] = architecture_metadata
 
     def evaluate_and_register(self, architecture, evaluate_fn, on_evaluation=None):
-        """Evaluate an architecture (if not already scored) and store its metadata.
-
-        Returns the fitness. Idempotent: an architecture already in
-        ``population_metadata`` is not re-evaluated.
-        """
+      
         existing = self.population_metadata.get(id(architecture))
         if existing is not None and existing["fitness"] is not None:
             return existing["fitness"]
@@ -104,7 +88,6 @@ class Neuroevolution(BaseAlgorithm):
         best_fitness = float("-inf")
         best_architecture = None
 
-        # Elitism: keep the best found so far, even if it has left the population.
         if self.best_architecture is not None and id(self.best_architecture) in self.population_metadata:
             best_fitness = self.population_metadata[id(self.best_architecture)]["fitness"].macro_f1
             best_architecture = self.best_architecture
@@ -136,7 +119,7 @@ class Neuroevolution(BaseAlgorithm):
         candidates = [self.population_metadata[id(a)] for a in self.population]
         selected = []
         for _ in range(num_selections):
-            tournament_size = min(4, len(candidates))  # Choose a tournament size (e.g., 3)
+            tournament_size = min(4, len(candidates))  
             tournament_candidates = random.sample(candidates, tournament_size)
             best_candidate = max(tournament_candidates, key=lambda metadata: metadata["fitness"].macro_f1)
             selected.append(best_candidate["architecture"])
@@ -158,8 +141,6 @@ class Neuroevolution(BaseAlgorithm):
         layer = arch_.layers[layer_index]
         ss = self.search_space
 
-        # Re-sample one field from the search space until the layer actually
-        # changes. Every value therefore stays inside the declared space.
         while layer == architecture.layers[layer_index]:
             if layer.layer_type == "CNN":
                 feature = random.choice(["hidden_size", "dropout", "activation", "kernel_size", "pooling"])
@@ -182,11 +163,7 @@ class Neuroevolution(BaseAlgorithm):
         return arch_
 
     def create_layer(self, exclude_type=None):
-        """Sample a fresh, in-space layer -- optionally forcing a different type.
-
-        Draws from ``search_space.sample_layer`` so a created layer follows the
-        exact same distribution as a generated one.
-        """
+      
         layer = self.search_space.sample_layer()
         choices = self.search_space.space["layer"]["type"]["choices"]
         if exclude_type is not None and len(choices) > 1:
@@ -201,10 +178,7 @@ class Neuroevolution(BaseAlgorithm):
         if random.random() < 0.5:
             arch_.learning_rate = self.search_space.sample_learning_rate()
         else:
-            # Only consider structural ops that are actually applicable given the
-            # declared [min, max] bounds, so the mutation always changes something
-            # (a "delete" on a min-size arch or "create" on a max-size arch would
-            # otherwise be a silent no-op -> an identical, wasted child).
+          
             updates = []
             if arch_.num_layers > 0:
                 updates.append("replace")
@@ -237,8 +211,7 @@ class Neuroevolution(BaseAlgorithm):
         parent2_subset_1 = parent2.layers[:point]
         parent2_subset_2 = parent2.layers[point:]
 
-        # deepcopy so children own independent layer objects (mutating a child
-        # must never reach back and corrupt a parent still in the population).
+       
         child1_layers = copy.deepcopy(parent1_subset_1 + parent2_subset_2)
         child2_layers = copy.deepcopy(parent2_subset_1 + parent1_subset_2)
 
@@ -306,7 +279,6 @@ class Neuroevolution(BaseAlgorithm):
         return offspring
     
     def final_selection(self, candidates, num_selections, evaluate_fn, on_evaluation=None):
-        # candidates are ArchitectureConfig objects; make sure each is scored.
         for architecture in candidates:
             self.evaluate_and_register(architecture, evaluate_fn, on_evaluation)
         sorted_candidates = sorted(
@@ -317,30 +289,24 @@ class Neuroevolution(BaseAlgorithm):
         
         best_candidates = sorted_candidates[:num_selections // 2]
         if best_candidates[0] == best_candidates[1]:
-            # If the top two candidates are identical, select the next-best candidate
-            # to ensure diversity in the population.
+          
             best_candidates[1] = sorted_candidates[num_selections // 2]
 
         worst_candidates = sorted_candidates[-(num_selections // 2):]
         if worst_candidates[0] == worst_candidates[1]:
-            # If the bottom two candidates are identical, select the next-worst candidate
-            # to ensure diversity in the population.
+           
             worst_candidates[1] = sorted_candidates[-(num_selections // 2 + 1)]
 
         return best_candidates + worst_candidates
     
     def steady_state_replacement(self, num_selections, candidates):
-        # Insert the new (already-evaluated) candidates into the population.
         for architecture in candidates:
             if architecture not in self.population:
                 metadata = self.population_metadata[id(architecture)]
                 self._vprint(f"Adding architecture ID: {id(architecture)} to population, Architecture: {architecture}, Fitness: {metadata['fitness']}")
                 self.population.append(architecture)
 
-        # Steady-state: trim the weakest members so the population stays at its
-        # target size (population_size, NOT the total eval budget). Removing from
-        # population AND metadata keeps the two in sync, so selection (which reads
-        # self.population) never sees a stale individual.
+      
         while len(self.population) > self.population_size:
             weakest = min(
                 self.population,
@@ -351,9 +317,7 @@ class Neuroevolution(BaseAlgorithm):
             self.population.remove(weakest)
             self.population_metadata.pop(id(weakest), None)
 
-        # Cache hygiene: drop any metadata no longer referenced by the population
-        # (e.g. mutated parents that were consumed by crossover), so metadata and
-        # population stay exactly in sync.
+       
         alive = {id(a) for a in self.population}
         for key in [k for k in self.population_metadata if k not in alive]:
             self.population_metadata.pop(key)
@@ -365,7 +329,6 @@ class Neuroevolution(BaseAlgorithm):
         self.select_best_architecture()
 
         for generation in range(number_of_generations):
-            # Hard budget cap: stop once we've used every allowed evaluation.
             if self._eval_count >= self.budget:
                 break
 
@@ -433,18 +396,12 @@ class Neuroevolution(BaseAlgorithm):
                 else:
                     offspring.extend(pair)
 
-            # Odd one out: the last parent has no pair to cross with, so carry it
-            # through unchanged rather than dropping it.
+          
             if len(mutated_parents) % 2 == 1:
                 offspring.append(mutated_parents[-1])
 
             self._vprint("="*80,'Crossover Complete',"="*80)
 
-            # Every candidate entering replacement must be scored first (this is
-            # where offspring get their real evaluation + eval number). Respect
-            # the hard budget cap: skip a candidate that would need a NEW
-            # evaluation once the budget is exhausted (already-scored pass-through
-            # parents are free and still allowed through).
             evaluated = []
             for architecture in offspring:
                 scored = self.population_metadata.get(id(architecture))
@@ -469,9 +426,7 @@ class Neuroevolution(BaseAlgorithm):
 
     def search(self, evaluate_fn, on_evaluation=None, verbose=False):
         self.verbose = verbose
-        # Split the total evaluation budget: 20% seeds the initial population,
-        # the rest funds the generations. Floored so small budgets still run, and
-        # capped at the budget so the initial population alone can't overshoot.
+      
         population_size = min(self.budget, max(2, int(self.budget * 0.20)))
         generation_size = max(1, int((self.budget * 0.80) / 4))
         return self.execute(
@@ -484,69 +439,60 @@ class Neuroevolution(BaseAlgorithm):
             on_evaluation=on_evaluation
         )
 
-        # for i in self.population_metadata:
-        #     print('\n')
-        #     print(f"Architecture ID: {i}, Architecture: {self.population_metadata[i]['architecture']}, Fitness: {self.population_metadata[i]['fitness']}")
-        
-        # return self._run_loop(self.population, evaluate_fn, on_evaluation)
 
 if __name__ == "__main__":
-    import sys
+    print("main")
+    # import sys
 
-    from src.models.search_space import SearchSpace
-    from src.experiment.experiment_manager import ExperimentManager
+    # from src.models.search_space import SearchSpace
+    # from src.experiment.experiment_manager import ExperimentManager
 
-    # Mirror everything printed during the run to a text file as well as the console.
-    class _Tee:
-        def __init__(self, *streams):
-            self.streams = streams
+    # class _Tee:
+    #     def __init__(self, *streams):
+    #         self.streams = streams
 
-        def write(self, data):
-            for s in self.streams:
-                s.write(data)
+    #     def write(self, data):
+    #         for s in self.streams:
+    #             s.write(data)
 
-        def flush(self):
-            for s in self.streams:
-                s.flush()
+    #     def flush(self):
+    #         for s in self.streams:
+    #             s.flush()
 
-    output_path = "neuroevolution_output.txt"
-    log_file = open(output_path, "w", encoding="utf-8")
-    sys.stdout = _Tee(sys.__stdout__, log_file)
+    # output_path = "neuroevolution_output.txt"
+    # log_file = open(output_path, "w", encoding="utf-8")
+    # sys.stdout = _Tee(sys.__stdout__, log_file)
 
-    try:
-        experiment_manager = ExperimentManager()
+    # try:
+    #     experiment_manager = ExperimentManager()
 
-        # Load the dataset ONCE, up front -- not on every evaluation.
-        loaders, meta = experiment_manager.load_data()
+    #     loaders, meta = experiment_manager.load_data()
 
-        # For a fast smoke run, uncomment to cap work per evaluation:
-        # experiment_manager.experiment_cfg["training"]["max_train_batches"] = 2
-        # experiment_manager.experiment_cfg["training"]["max_eval_batches"] = 2
-        # experiment_manager.experiment_cfg["training"]["epochs"] = 1
+      
 
-        counter = {"n": 0}
+    #     counter = {"n": 0}
 
-        def evaluate_fn(architecture):
-            counter["n"] += 1
-            print(f"[eval {counter['n']}] training {architecture.num_layers}-layer model...", flush=True)
-            return evaluate_architecture(
-                architecture, loaders["train"], loaders["val"],
-                experiment_manager.experiment_cfg, meta["input_dim"],
-                meta["num_classes"], device=experiment_manager.device,
-            )
+    #     def evaluate_fn(architecture):
+    #         counter["n"] += 1
+    #         print(f"[eval {counter['n']}] training {architecture.num_layers}-layer model...", flush=True)
+    #         return evaluate_architecture(
+    #             architecture, loaders["train"], loaders["val"],
+    #             experiment_manager.experiment_cfg, meta["input_dim"],
+    #             meta["num_classes"], device=experiment_manager.device,
+    #         )
 
-        def on_evaluation(eval_number, architecture, result):
-            status = f"FAILED: {result.error}" if result.failed else f"macro_f1={result.macro_f1:.4f} acc={result.accuracy:.4f}"
-            print(f"    -> {status}  ({result.training_time:.1f}s train)", flush=True)
+    #     def on_evaluation(eval_number, architecture, result):
+    #         status = f"FAILED: {result.error}" if result.failed else f"macro_f1={result.macro_f1:.4f} acc={result.accuracy:.4f}"
+    #         print(f"    -> {status}  ({result.training_time:.1f}s train)", flush=True)
 
-        search_space = SearchSpace.from_yaml()
-        neuroevolution = Neuroevolution(search_space, budget=50)
-        outcome = neuroevolution.search(evaluate_fn, on_evaluation, verbose=True)
-        print(f"Best architecture (eval #{outcome.best_evaluation_number}): {outcome.best_architecture}")
-        print(f"Best fitness: {outcome.best_result}")
-        print(f"Total evaluations: {len(outcome.history)}, total search time: {outcome.total_search_time:.1f}s")
-    finally:
-        sys.stdout = sys.__stdout__
-        log_file.close()
-        print(f"Output written to {output_path}")
+    #     search_space = SearchSpace.from_yaml()
+    #     neuroevolution = Neuroevolution(search_space, budget=50)
+    #     outcome = neuroevolution.search(evaluate_fn, on_evaluation, verbose=True)
+    #     print(f"Best architecture (eval #{outcome.best_evaluation_number}): {outcome.best_architecture}")
+    #     print(f"Best fitness: {outcome.best_result}")
+    #     print(f"Total evaluations: {len(outcome.history)}, total search time: {outcome.total_search_time:.1f}s")
+    # finally:
+    #     sys.stdout = sys.__stdout__
+    #     log_file.close()
+    #     print(f"Output written to {output_path}")
 

@@ -1,9 +1,3 @@
-"""Random Search (the first algorithm; framework spec, section 17).
-
-Samples ``budget`` architectures uniformly from the search space and keeps the
-best. Because all the heavy lifting (build/train/evaluate/log) is injected, the
-later algorithms (BO, Neuroevolution, Hybrid) reuse this exact machinery.
-"""
 
 from src.algorithms.base_algorithm import BaseAlgorithm
 

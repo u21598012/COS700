@@ -1,9 +1,4 @@
-"""Evaluator (framework spec, Phase 10).
 
-Every algorithm evaluates a candidate the same way: build the model, train it for
-the configured number of epochs, validate, and return a uniform
-:class:`EvaluationResult` carrying both quality metrics and resource/timing data.
-"""
 
 from dataclasses import asdict, dataclass, field
 from typing import Optional
@@ -20,7 +15,6 @@ from src.models.architecture_builder import build_model
 
 @dataclass
 class EvaluationResult:
-    """Uniform result returned for every evaluated architecture."""
 
     accuracy: float = 0.0
     precision: float = 0.0
@@ -36,18 +30,15 @@ class EvaluationResult:
     peak_ram_mb: float = 0.0
     peak_gpu_mb: float = 0.0
 
-    # Convenience: overall peak memory used by reporting/DB.
     peak_memory_mb: float = 0.0
 
     failed: bool = False
     error: Optional[str] = None
 
-    # Not persisted to CSV; handy for plotting confusion matrices etc.
     predictions: Optional[np.ndarray] = field(default=None, repr=False)
     targets: Optional[np.ndarray] = field(default=None, repr=False)
 
     def to_record(self):
-        """Dict of the scalar fields only (safe for DB/CSV)."""
         d = asdict(self)
         d.pop("predictions", None)
         d.pop("targets", None)
@@ -85,12 +76,7 @@ def _evaluate(model, loader, device, max_batches=None):
 
 def evaluate_architecture(architecture, train_loader, val_loader, config,
                           input_dim, num_classes, device="cpu"):
-    """Train + validate one architecture and return an :class:`EvaluationResult`.
 
-    ``config`` is the ``experiment`` config dict (uses ``training.epochs`` and the
-    optional ``training.max_train_batches`` / ``training.max_eval_batches`` knobs
-    for fast smoke runs).
-    """
     training_cfg = config.get("training", {})
     epochs = int(training_cfg.get("epochs", 10))
     max_train_batches = training_cfg.get("max_train_batches")
@@ -108,13 +94,11 @@ def evaluate_architecture(architecture, train_loader, val_loader, config,
         optimizer = torch.optim.Adam(model.parameters(), lr=architecture.learning_rate)
         criterion = nn.CrossEntropyLoss()
 
-        # ---- training -----------------------------------------------------
         timer.begin()
         for _ in range(epochs):
             _train_one_epoch(model, train_loader, optimizer, criterion, device, max_train_batches)
         result.training_time = timer.stop()
 
-        # ---- validation / inference --------------------------------------
         timer.begin()
         preds, targets = _evaluate(model, val_loader, device, max_eval_batches)
         result.inference_time = timer.stop()
@@ -127,7 +111,7 @@ def evaluate_architecture(architecture, train_loader, val_loader, config,
             result.macro_f1 = metrics["macro_f1"]
             result.predictions = preds
             result.targets = targets
-    except Exception as exc:  # keep the search alive even if one model fails
+    except Exception as exc:  
         result.failed = True
         result.error = f"{type(exc).__name__}: {exc}"
 

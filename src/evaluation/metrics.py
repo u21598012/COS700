@@ -1,8 +1,3 @@
-"""Classification metrics shared by every algorithm (framework spec, Phase 10).
-
-Macro averaging is used for precision/recall/F1 because the MIT-BIH classes are
-heavily imbalanced and we care about minority arrhythmia classes.
-"""
 
 from sklearn.metrics import (
     accuracy_score,
@@ -14,7 +9,6 @@ from sklearn.metrics import (
 
 
 def compute_metrics(y_true, y_pred):
-    """Return a dict of accuracy / precision / recall / macro-F1."""
     return {
         "accuracy": float(accuracy_score(y_true, y_pred)),
         "precision": float(precision_score(y_true, y_pred, average="macro", zero_division=0)),

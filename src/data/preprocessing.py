@@ -1,19 +1,13 @@
-"""Signal preprocessing / normalisation.
-
-Statistics are always fit on the training split only and then applied to val/test
-to avoid information leakage.
-"""
 
 import numpy as np
 
 
 class Normalizer:
-    """Z-score or min-max normaliser fit on training data."""
 
     def __init__(self, method="zscore"):
         self.method = method
-        self.stat_a = None  # mean (zscore) or min (minmax)
-        self.stat_b = None  # std (zscore) or range (minmax)
+        self.stat_a = None  
+        self.stat_b = None 
 
     def fit(self, X):
         if self.method == "zscore":

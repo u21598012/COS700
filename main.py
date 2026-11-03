@@ -1,11 +1,4 @@
-"""Command-line entry point for the ECG NAS framework.
 
-Examples
---------
-    python main.py                 # run the experiment defined in configs/
-    python main.py --smoke         # tiny, fast end-to-end run (sanity check)
-    python main.py --algorithm random_search --seeds 11 22 --budget 5
-"""
 
 import argparse
 
@@ -13,7 +6,6 @@ from src.experiment.experiment_manager import ExperimentManager
 from src.utils.config import apply_overrides, load_configs
 
 
-# Tiny overrides so the whole pipeline finishes in seconds end-to-end.
 SMOKE_OVERRIDES = {
     "experiment": {
         "seeds": [11, 22],

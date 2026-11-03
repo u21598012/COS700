@@ -1,9 +1,4 @@
-"""Search space: validation + sampling of architectures.
 
-This is the ONLY module that interprets ``search_space.yaml``. Search algorithms
-ask the :class:`SearchSpace` for samples / bounds and never read the YAML
-themselves (framework spec, Phase 7).
-"""
 
 import random
 
@@ -13,19 +8,16 @@ from src.utils import paths
 
 
 class SearchSpace:
-    """Validates ranges and samples :class:`ArchitectureConfig` objects."""
 
     def __init__(self, space):
         self.space = space
         self._validate()
 
-    # ---- construction -----------------------------------------------------
     @classmethod
     def from_yaml(cls, path=None):
         path = path or (paths.CONFIG_DIR / "search_space.yaml")
         return cls(load_yaml(path))
 
-    # ---- validation -------------------------------------------------------
     def _validate(self):
         g = self.space.get("global", {})
         layer = self.space.get("layer", {})
@@ -38,7 +30,6 @@ class SearchSpace:
         if not layer.get("type", {}).get("choices"):
             raise ValueError("search_space.layer.type.choices must be a non-empty list")
 
-    # ---- sampling primitives ---------------------------------------------
     def sample_learning_rate(self):
         r = self.space["global"]["learning_rate"]
         return random.uniform(r["min"], r["max"])

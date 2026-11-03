@@ -1,9 +1,4 @@
-"""Single-run driver (framework spec, "For Each Seed" block).
 
-A Runner executes one seed: set seed -> create run record -> execute the search
-algorithm -> log every evaluation to SQLite + MLflow -> save the best model ->
-close the run. The ExperimentManager loops Runners over all seeds.
-"""
 
 import uuid
 
@@ -31,14 +26,23 @@ class Runner:
         self.budget = int(self.experiment_cfg.get("budget", {}).get("evaluations", 10))
         self.selection_metric = self.experiment_cfg.get("selection_metric", "macro_f1")
 
+       
+        self.algorithm_params = dict(
+            (self.experiment_cfg.get("algorithm_params") or {}).get(
+                self.algorithm_name, {}
+            )
+        )
+
     def run_seed(self, seed, verbose=True):
         set_seed(seed)
         run_id = str(uuid.uuid4())
 
         algorithm = get_algorithm(
             self.algorithm_name, self.search_space, self.budget,
-            selection_metric=self.selection_metric,
+            selection_metric=self.selection_metric, **self.algorithm_params,
         )
+       
+        algorithm.set_run_context(run_id, seed)
 
         with mlflow_logger.start_run(run_name=f"{self.algorithm_name}_seed{seed}") as active:
             mlflow_run_id = active.info.run_id
@@ -51,6 +55,8 @@ class Runner:
                 "seed": seed,
                 "budget": self.budget,
                 "epochs": self.experiment_cfg.get("training", {}).get("epochs"),
+              
+                **{f"algo_{k}": v for k, v in self.algorithm_params.items()},
             })
 
             def evaluate_fn(architecture):
@@ -74,7 +80,6 @@ class Runner:
 
         return summary
 
-    # ------------------------------------------------------------------
     def _log_evaluation(self, run_id, seed, eval_number, architecture, result):
         arch_json = architecture.to_json()
         database.insert_evaluation(
@@ -98,19 +103,15 @@ class Runner:
         best_arch = outcome.best_architecture
         best_arch_json = best_arch.to_json() if best_arch is not None else None
 
-        # Per-run search progress (framework spec, Phase 12).
         artifact_manager.save_search_progress(outcome.history, f"{run_id}_search_progress")
 
         model_path = None
         if best_arch is not None:
-            # Persist the best architecture and a model artifact. The .pt holds a
-            # freshly-built model from the best spec (weights are not re-trained;
-            # the architecture JSON is the artifact that matters for NAS).
+           
             artifact_manager.save_architecture(best_arch, f"{run_id}_best")
             model = build_model(best_arch, self.meta["input_dim"], self.meta["num_classes"])
             model_path = str(artifact_manager.save_model(model, f"{run_id}_best"))
 
-            # Best-candidate predictions + confusion matrix.
             if best is not None and best.predictions is not None:
                 artifact_manager.save_predictions(
                     best.targets, best.predictions, f"{run_id}_best_predictions"

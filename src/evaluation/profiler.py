@@ -1,9 +1,3 @@
-"""Resource monitoring (framework spec, Phase 11).
-
-Provides point-in-time helpers (RAM / GPU) plus a background :class:`ResourceMonitor`
-that samples CPU% and RAM while training runs and reports averages + peaks.
-Sampling begins before training and ends after evaluation.
-"""
 
 import os
 import threading
@@ -14,16 +8,13 @@ PROCESS = psutil.Process(os.getpid())
 
 
 def get_ram_usage():
-    """Current process resident memory in MB."""
     return PROCESS.memory_info().rss / 1024 / 1024
 
 
-# Backwards-compatible alias (older tests import this name).
 get_memory_usage = get_ram_usage
 
 
 def get_gpu_memory():
-    """Peak GPU memory in MB for the current process, or 0.0 if no CUDA."""
     try:
         import torch
 
@@ -45,14 +36,7 @@ def reset_gpu_peak():
 
 
 class ResourceMonitor:
-    """Background sampler for CPU% and RAM (MB).
-
-    Usage::
-
-        monitor = ResourceMonitor(interval=1.0).start()
-        ... train / evaluate ...
-        stats = monitor.stop()   # dict of avg/peak cpu & ram, peak gpu
-    """
+   
 
     def __init__(self, interval=1.0):
         self.interval = interval
@@ -63,7 +47,6 @@ class ResourceMonitor:
 
     def start(self):
         reset_gpu_peak()
-        # Prime cpu_percent so the first real sample is meaningful.
         PROCESS.cpu_percent(interval=None)
         self._stop_event.clear()
         self._cpu_samples = []
@@ -86,7 +69,6 @@ class ResourceMonitor:
             self._stop_event.set()
             self._thread.join(timeout=self.interval * 2 + 1)
             self._thread = None
-        # Always capture at least one final sample.
         self._ram_samples.append(get_ram_usage())
         return self.summary()
 

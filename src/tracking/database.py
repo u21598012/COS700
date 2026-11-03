@@ -1,13 +1,3 @@
-"""SQLite results database (framework spec, Phase 5).
-
-Four tables:
-  * experiments  - one row per experiment (metadata + config snapshot)
-  * runs         - one row per seed
-  * evaluations  - one row per architecture evaluated
-  * best_models  - best architecture per run
-
-Initialisation must run before any experiment begins.
-"""
 
 import json
 import sqlite3
@@ -21,7 +11,6 @@ def _now():
 
 
 def get_connection(db_path=None):
-    """Open a connection, creating the parent directory if needed."""
     db_path = paths.DB_PATH if db_path is None else paths.resolve(db_path)
     db_path.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(db_path)
@@ -30,7 +19,6 @@ def get_connection(db_path=None):
 
 
 def initialize_database(db_path=None):
-    """Create all tables if they do not yet exist."""
     conn = get_connection(db_path)
     cur = conn.cursor()
 
@@ -112,10 +100,6 @@ def initialize_database(db_path=None):
     conn.commit()
     conn.close()
 
-
-# --------------------------------------------------------------------------
-# Insert / update helpers
-# --------------------------------------------------------------------------
 def insert_experiment(experiment_id, experiment_name, algorithm, num_seeds,
                       budget, config, system_info, db_path=None):
     conn = get_connection(db_path)
@@ -144,7 +128,6 @@ def create_run(run_id, experiment_id, algorithm, seed, mlflow_run_id=None, db_pa
 
 
 def finalize_run(run_id, summary, db_path=None):
-    """Update a run row with its final best-candidate summary."""
     conn = get_connection(db_path)
     conn.execute(
         """UPDATE runs SET
@@ -179,7 +162,6 @@ def finalize_run(run_id, summary, db_path=None):
 
 def insert_evaluation(evaluation_id, run_id, algorithm, seed, evaluation_number,
                       architecture_json, result, db_path=None):
-    """``result`` is an EvaluationResult (or its ``.to_record()`` dict)."""
     rec = result.to_record() if hasattr(result, "to_record") else result
     conn = get_connection(db_path)
     conn.execute(
@@ -219,7 +201,6 @@ def insert_best_model(run_id, evaluation_number, architecture_json, accuracy,
 
 
 def fetch_all(table, db_path=None):
-    """Return every row of ``table`` as a list of dicts (for quick inspection)."""
     if table not in {"experiments", "runs", "evaluations", "best_models"}:
         raise ValueError(f"Unknown table: {table}")
     conn = get_connection(db_path)

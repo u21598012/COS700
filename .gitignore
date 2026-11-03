@@ -27,3 +27,15 @@ mlflow.db
 desktop.ini
 .DS_Store
 .vscode/
+
+stash/
+
+docs/
+
+slides/
+
+tests/
+
+analysis/figures/
+
+*.db

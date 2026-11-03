@@ -1,33 +1,460 @@
 ================================================================================
-Hybrid search: budget=10, bo_fraction=0.4 -> 4 Bayesian trials
+Hybrid search on cuda
+  budget=50  bo_fraction=0.4  seed=6011572
+  phase 1: 20 Bayesian trials -> population of 20
+  phase 2: 15 generations x 2 real evals = 30 evals
+  GA: 10 parents -> 45 unique pairs -> up to 90 offspring/generation (surrogate-scored)
+  surrogate: xgboost (refitted every generation; the only model this run fits)
+  training: epochs=10 batch_size=128 max_train_batches=None max_eval_batches=None
+  data: max_train_samples=None max_val_samples=None (train batches: 548)
+  dataset cached to C:\Users\dhina\OneDrive\Documents\University\2026\COS 700\Repo\COS700\results\csv\surrogate_dataset.csv
 ================================================================================ 
 
-    training 5-layer model (lr=8.35e-03)...
-[eval 1] -> macro_f1=0.1811 acc=0.8277  (417.9s train)
-    training 3-layer model (lr=1.48e-03)...
-[eval 2] -> macro_f1=0.8827 acc=0.9784  (560.2s train)
-    training 4-layer model (lr=4.88e-03)...
-[eval 3] -> macro_f1=0.1811 acc=0.8277  (446.3s train)
-    training 5-layer model (lr=2.43e-04)...
-[eval 4] -> macro_f1=0.8439 acc=0.9679  (362.0s train)
+==============================================================================
+PHASE 1 - Bayesian optimization: 20 trials
+==============================================================================
+    training 4-layer model (lr=5.49e-03)...
+[eval 1/50] -> macro_f1=0.5300 acc=0.9147  (181.7s train)
+    training 4-layer model (lr=1.67e-04)...
+[eval 2/50] -> macro_f1=0.8529 acc=0.9661  (196.2s train)
+    training 3-layer model (lr=1.31e-04)...
+[eval 3/50] -> macro_f1=0.6382 acc=0.9329  (51.1s train)
+    training 4-layer model (lr=4.00e-04)...
+[eval 4/50] -> macro_f1=0.6831 acc=0.9497  (64.6s train)
+    training 3-layer model (lr=1.06e-04)...
+[eval 5/50] -> macro_f1=0.3868 acc=0.8749  (24.5s train)
+    training 4-layer model (lr=9.50e-03)...
+[eval 6/50] -> macro_f1=0.8198 acc=0.9648  (201.9s train)
+    training 2-layer model (lr=8.47e-03)...
+[eval 7/50] -> macro_f1=0.7420 acc=0.9569  (148.8s train)
+    training 4-layer model (lr=2.59e-03)...
+[eval 8/50] -> macro_f1=0.8840 acc=0.9771  (74.3s train)
+    training 3-layer model (lr=9.24e-04)...
+[eval 9/50] -> macro_f1=0.8050 acc=0.9610  (19.8s train)
+    training 1-layer model (lr=9.94e-03)...
+[eval 10/50] -> macro_f1=0.7942 acc=0.9659  (115.3s train)
+    training 5-layer model (lr=2.29e-03)...
+[eval 11/50] -> macro_f1=0.8621 acc=0.9705  (29.9s train)
+    training 5-layer model (lr=2.43e-03)...
+[eval 12/50] -> macro_f1=0.8659 acc=0.9736  (30.8s train)
+    training 5-layer model (lr=2.53e-03)...
+[eval 13/50] -> macro_f1=0.8401 acc=0.9722  (55.2s train)
+    training 5-layer model (lr=2.05e-03)...
+[eval 14/50] -> macro_f1=0.9015 acc=0.9820  (68.9s train)
+    training 5-layer model (lr=9.69e-04)...
+[eval 15/50] -> macro_f1=0.8904 acc=0.9808  (107.1s train)
+    training 5-layer model (lr=8.94e-04)...
+[eval 16/50] -> macro_f1=0.8928 acc=0.9796  (233.8s train)
+    training 5-layer model (lr=8.61e-04)...
+[eval 17/50] -> macro_f1=0.9050 acc=0.9828  (239.9s train)
+    training 5-layer model (lr=4.20e-04)...
+[eval 18/50] -> macro_f1=0.8851 acc=0.9780  (233.2s train)
+    training 4-layer model (lr=1.43e-03)...
+[eval 19/50] -> macro_f1=0.8961 acc=0.9795  (276.9s train)
+    training 5-layer model (lr=4.32e-04)...
+[eval 20/50] -> macro_f1=0.8843 acc=0.9789  (316.7s train)
+
+Surrogate dataset (20 rows) saved to C:\Users\dhina\OneDrive\Documents\University\2026\COS 700\Repo\COS700\results\csv\surrogate_dataset.csv
+
+  [xgboost] n_train=16 n_test=4
+      train  RMSE=0.00156  MAE=0.00131  R2=+0.9999
+      mean-baseline RMSE=0.13160   (train RMSE below this only proves it can memorise)
+      LOO-CV RMSE=0.07161  -> beats baseline
+      best params: {'colsample_bytree': 0.4, 'learning_rate': 0.1, 'max_depth': 1, 'n_estimators': 200, 'reg_alpha': 0.0, 'reg_lambda': 1.0}
+      held-out RMSE=0.17771 on 4 row(s)   (too few rows to read much into)
+
+==============================================================================
+PHASE 2 - Neuroevolution: 15 generations, 30 evaluations remaining
+==============================================================================
+  seeded population: 20 architectures, best macro_f1=0.9050
+
+-- generation 1/15 (budget left: 30) --
+  10 parents -> 90 offspring -> 89 unique unseen
+  surrogate predictions: best=0.8989 worst=0.6790
+    training 5-layer model (lr=2.53e-03)...
+[eval 21/50] -> macro_f1=0.8893 acc=0.9803  (71.7s train)
+  real eval #21: predicted=0.8989 actual=0.8893 (error=0.0096)
+    training 5-layer model (lr=9.69e-04)...
+[eval 22/50] -> macro_f1=0.9057 acc=0.9844  (65.2s train)
+  real eval #22: predicted=0.8989 actual=0.9057 (error=0.0068)
+  population best macro_f1=0.9057 (population size 20)
+  [xgboost] n_train=17 n_test=5
+      train  RMSE=0.00082  MAE=0.00069  R2=+1.0000
+      mean-baseline RMSE=0.13093   (train RMSE below this only proves it can memorise)
+      LOO-CV RMSE=0.08262  -> beats baseline
+      best params: {'colsample_bytree': 0.4, 'learning_rate': 0.3, 'max_depth': 1, 'n_estimators': 200, 'reg_alpha': 0.0, 'reg_lambda': 1.0}
+      held-out RMSE=0.11631 on 5 row(s)   (too few rows to read much into)
+
+-- generation 2/15 (budget left: 28) --
+  10 parents -> 90 offspring -> 86 unique unseen
+  surrogate predictions: best=0.9086 worst=0.7335
+    training 5-layer model (lr=2.56e-03)...
+[eval 23/50] -> macro_f1=0.9078 acc=0.9832  (97.1s train)
+  real eval #23: predicted=0.9086 actual=0.9078 (error=0.0008)
+    training 5-layer model (lr=2.60e-03)...
+[eval 24/50] -> macro_f1=0.9065 acc=0.9831  (309.4s train)
+  real eval #24: predicted=0.9086 actual=0.9065 (error=0.0021)
+  population best macro_f1=0.9078 (population size 20)
+  [xgboost] n_train=19 n_test=5
+      train  RMSE=0.00114  MAE=0.00088  R2=+0.9999
+      mean-baseline RMSE=0.12694   (train RMSE below this only proves it can memorise)
+      LOO-CV RMSE=0.07851  -> beats baseline
+      best params: {'colsample_bytree': 0.4, 'learning_rate': 0.3, 'max_depth': 1, 'n_estimators': 200, 'reg_alpha': 0.0, 'reg_lambda': 1.0}
+      held-out RMSE=0.09652 on 5 row(s)   (too few rows to read much into)
+
+-- generation 3/15 (budget left: 26) --
+  10 parents -> 90 offspring -> 88 unique unseen
+  surrogate predictions: best=0.9075 worst=0.7074
+    training 5-layer model (lr=9.69e-04)...
+[eval 25/50] -> macro_f1=0.9165 acc=0.9849  (254.4s train)
+  real eval #25: predicted=0.9075 actual=0.9165 (error=0.0090)
+    training 5-layer model (lr=9.69e-04)...
+[eval 26/50] -> macro_f1=0.6378 acc=0.9457  (98.8s train)
+  real eval #26: predicted=0.9058 actual=0.6378 (error=0.2680)
+  population best macro_f1=0.9165 (population size 20)
+  [xgboost] n_train=20 n_test=6
+      train  RMSE=0.00421  MAE=0.00339  R2=+0.9990
+      mean-baseline RMSE=0.13116   (train RMSE below this only proves it can memorise)
+      LOO-CV RMSE=0.06371  -> beats baseline
+      best params: {'colsample_bytree': 0.4, 'learning_rate': 0.3, 'max_depth': 1, 'n_estimators': 50, 'reg_alpha': 0.0, 'reg_lambda': 0.1}
+      held-out RMSE=0.14970 on 6 row(s)   (too few rows to read much into)
+
+-- generation 4/15 (budget left: 24) --
+  10 parents -> 90 offspring -> 90 unique unseen
+  surrogate predictions: best=0.9061 worst=0.5273
+    training 5-layer model (lr=4.32e-04)...
+[eval 27/50] -> macro_f1=0.8959 acc=0.9805  (339.6s train)
+  real eval #27: predicted=0.9061 actual=0.8959 (error=0.0102)
+    training 5-layer model (lr=4.32e-04)...
+[eval 28/50] -> macro_f1=0.9116 acc=0.9826  (359.5s train)
+  real eval #28: predicted=0.9031 actual=0.9116 (error=0.0085)
+  population best macro_f1=0.9165 (population size 20)
+  [xgboost] n_train=22 n_test=6
+      train  RMSE=0.00101  MAE=0.00076  R2=+0.9999
+      mean-baseline RMSE=0.12245   (train RMSE below this only proves it can memorise)
+      LOO-CV RMSE=0.06616  -> beats baseline
+      best params: {'colsample_bytree': 0.4, 'learning_rate': 0.3, 'max_depth': 1, 'n_estimators': 200, 'reg_alpha': 0.0, 'reg_lambda': 1.0}
+      held-out RMSE=0.13852 on 6 row(s)   (too few rows to read much into)
+
+-- generation 5/15 (budget left: 22) --
+  10 parents -> 90 offspring -> 87 unique unseen
+  surrogate predictions: best=0.9141 worst=0.7388
+    training 5-layer model (lr=1.43e-03)...
+[eval 29/50] -> macro_f1=0.9123 acc=0.9853  (336.0s train)
+  real eval #29: predicted=0.9141 actual=0.9123 (error=0.0018)
+    training 5-layer model (lr=8.61e-04)...
+[eval 30/50] -> macro_f1=0.8943 acc=0.9811  (338.9s train)
+  real eval #30: predicted=0.9119 actual=0.8943 (error=0.0176)
+  population best macro_f1=0.9165 (population size 20)
+  [xgboost] n_train=24 n_test=6
+      train  RMSE=0.00266  MAE=0.00205  R2=+0.9996
+      mean-baseline RMSE=0.13681   (train RMSE below this only proves it can memorise)
+      LOO-CV RMSE=0.09137  -> beats baseline
+      best params: {'colsample_bytree': 0.7, 'learning_rate': 0.3, 'max_depth': 1, 'n_estimators': 100, 'reg_alpha': 0.0, 'reg_lambda': 0.1}
+      held-out RMSE=0.12089 on 6 row(s)   (too few rows to read much into)
+
+-- generation 6/15 (budget left: 20) --
+  10 parents -> 90 offspring -> 87 unique unseen
+  surrogate predictions: best=0.9167 worst=0.6410
+    training 4-layer model (lr=9.69e-04)...
+[eval 31/50] -> macro_f1=0.8969 acc=0.9782  (248.6s train)
+  real eval #31: predicted=0.9167 actual=0.8969 (error=0.0198)
+    training 5-layer model (lr=8.61e-04)...
+[eval 32/50] -> macro_f1=0.8864 acc=0.9764  (289.3s train)
+  real eval #32: predicted=0.9164 actual=0.8864 (error=0.0300)
+  population best macro_f1=0.9165 (population size 20)
+  [xgboost] n_train=25 n_test=7
+      train  RMSE=0.00148  MAE=0.00109  R2=+0.9999
+      mean-baseline RMSE=0.13495   (train RMSE below this only proves it can memorise)
+      LOO-CV RMSE=0.09179  -> beats baseline
+      best params: {'colsample_bytree': 0.7, 'learning_rate': 0.3, 'max_depth': 1, 'n_estimators': 200, 'reg_alpha': 0.0, 'reg_lambda': 0.1}
+      held-out RMSE=0.11372 on 7 row(s)   (too few rows to read much into)
+
+-- generation 7/15 (budget left: 18) --
+  10 parents -> 90 offspring -> 84 unique unseen
+  surrogate predictions: best=0.9209 worst=0.5191
+    training 5-layer model (lr=1.43e-03)...
+[eval 33/50] -> macro_f1=0.9130 acc=0.9827  (374.0s train)
+  real eval #33: predicted=0.9209 actual=0.9130 (error=0.0079)
+    training 4-layer model (lr=4.32e-04)...
+[eval 34/50] -> macro_f1=0.8944 acc=0.9794  (63.9s train)
+  real eval #34: predicted=0.9176 actual=0.8944 (error=0.0233)
+  population best macro_f1=0.9165 (population size 20)
+  [xgboost] n_train=27 n_test=7
+      train  RMSE=0.00089  MAE=0.00070  R2=+1.0000
+      mean-baseline RMSE=0.13057   (train RMSE below this only proves it can memorise)
+      LOO-CV RMSE=0.09181  -> beats baseline
+      best params: {'colsample_bytree': 0.7, 'learning_rate': 0.3, 'max_depth': 2, 'n_estimators': 100, 'reg_alpha': 0.0, 'reg_lambda': 5.0}
+      held-out RMSE=0.07061 on 7 row(s)   (too few rows to read much into)
+
+-- generation 8/15 (budget left: 16) --
+  10 parents -> 90 offspring -> 89 unique unseen
+  surrogate predictions: best=0.9170 worst=0.6371
+    training 5-layer model (lr=9.40e-03)...
+[eval 35/50] -> macro_f1=0.7745 acc=0.9553  (354.2s train)
+  real eval #35: predicted=0.9170 actual=0.7745 (error=0.1425)
+    training 4-layer model (lr=1.43e-03)...
+[eval 36/50] -> macro_f1=0.9121 acc=0.9841  (346.2s train)
+  real eval #36: predicted=0.9132 actual=0.9121 (error=0.0011)
+  population best macro_f1=0.9165 (population size 20)
+  [xgboost] n_train=28 n_test=8
+      train  RMSE=0.03907  MAE=0.02236  R2=+0.9081
+      mean-baseline RMSE=0.12885   (train RMSE below this only proves it can memorise)
+      LOO-CV RMSE=0.10606  -> beats baseline
+      best params: {'colsample_bytree': 0.4, 'learning_rate': 0.05, 'max_depth': 2, 'n_estimators': 100, 'reg_alpha': 0.0, 'reg_lambda': 5.0}
+      held-out RMSE=0.04579 on 8 row(s)   (too few rows to read much into)
+
+-- generation 9/15 (budget left: 14) --
+  10 parents -> 90 offspring -> 88 unique unseen
+  surrogate predictions: best=0.9021 worst=0.6523
+    training 5-layer model (lr=1.43e-03)...
+[eval 37/50] -> macro_f1=0.9139 acc=0.9841  (171.1s train)
+  real eval #37: predicted=0.9021 actual=0.9139 (error=0.0118)
+    training 5-layer model (lr=8.94e-04)...
+[eval 38/50] -> macro_f1=0.9176 acc=0.9832  (271.7s train)
+  real eval #38: predicted=0.8988 actual=0.9176 (error=0.0188)
+  population best macro_f1=0.9176 (population size 20)
+  [xgboost] n_train=30 n_test=8
+      train  RMSE=0.05177  MAE=0.03239  R2=+0.7112
+      mean-baseline RMSE=0.09633   (train RMSE below this only proves it can memorise)
+      LOO-CV RMSE=0.08752  -> beats baseline
+      best params: {'colsample_bytree': 0.7, 'learning_rate': 0.05, 'max_depth': 2, 'n_estimators': 50, 'reg_alpha': 0.1, 'reg_lambda': 5.0}
+      held-out RMSE=0.13065 on 8 row(s)   (too few rows to read much into)
+
+-- generation 10/15 (budget left: 12) --
+  10 parents -> 90 offspring -> 82 unique unseen
+  surrogate predictions: best=0.8888 worst=0.7385
+    training 5-layer model (lr=1.43e-03)...
+[eval 39/50] -> macro_f1=0.9247 acc=0.9852  (299.1s train)
+  real eval #39: predicted=0.8888 actual=0.9247 (error=0.0359)
+    training 5-layer model (lr=4.32e-03)...
+[eval 40/50] -> macro_f1=0.8722 acc=0.9735  (280.8s train)
+  real eval #40: predicted=0.8888 actual=0.8722 (error=0.0166)
+  population best macro_f1=0.9247 (population size 20)
+  [xgboost] n_train=32 n_test=8
+      train  RMSE=0.02107  MAE=0.01414  R2=+0.9521
+      mean-baseline RMSE=0.09626   (train RMSE below this only proves it can memorise)
+      LOO-CV RMSE=0.08332  -> beats baseline
+      best params: {'colsample_bytree': 0.4, 'learning_rate': 0.1, 'max_depth': 2, 'n_estimators': 200, 'reg_alpha': 0.1, 'reg_lambda': 1.0}
+      held-out RMSE=0.10973 on 8 row(s)   (too few rows to read much into)
+
+-- generation 11/15 (budget left: 10) --
+  10 parents -> 90 offspring -> 86 unique unseen
+  surrogate predictions: best=0.9094 worst=0.6413
+    training 5-layer model (lr=1.43e-03)...
+[eval 41/50] -> macro_f1=0.9030 acc=0.9824  (299.2s train)
+  real eval #41: predicted=0.9094 actual=0.9030 (error=0.0065)
+    training 5-layer model (lr=1.43e-03)...
+[eval 42/50] -> macro_f1=0.9146 acc=0.9852  (295.6s train)
+  real eval #42: predicted=0.9094 actual=0.9146 (error=0.0052)
+  population best macro_f1=0.9247 (population size 20)
+  [xgboost] n_train=33 n_test=9
+      train  RMSE=0.01762  MAE=0.01114  R2=+0.9609
+      mean-baseline RMSE=0.08909   (train RMSE below this only proves it can memorise)
+      LOO-CV RMSE=0.06903  -> beats baseline
+      best params: {'colsample_bytree': 0.4, 'learning_rate': 0.3, 'max_depth': 2, 'n_estimators': 50, 'reg_alpha': 0.1, 'reg_lambda': 1.0}
+      held-out RMSE=0.14966 on 9 row(s)   (too few rows to read much into)
+
+-- generation 12/15 (budget left: 8) --
+  10 parents -> 90 offspring -> 79 unique unseen
+  surrogate predictions: best=0.9058 worst=0.7351
+    training 5-layer model (lr=4.32e-04)...
+[eval 43/50] -> macro_f1=0.9215 acc=0.9851  (169.5s train)
+  real eval #43: predicted=0.9058 actual=0.9215 (error=0.0157)
+    training 4-layer model (lr=3.61e-03)...
+[eval 44/50] -> macro_f1=0.8756 acc=0.9769  (134.4s train)
+  real eval #44: predicted=0.9058 actual=0.8756 (error=0.0302)
+  population best macro_f1=0.9247 (population size 20)
+  [xgboost] n_train=35 n_test=9
+      train  RMSE=0.01751  MAE=0.00892  R2=+0.9576
+      mean-baseline RMSE=0.08509   (train RMSE below this only proves it can memorise)
+      LOO-CV RMSE=0.05888  -> beats baseline
+      best params: {'colsample_bytree': 0.4, 'learning_rate': 0.3, 'max_depth': 2, 'n_estimators': 100, 'reg_alpha': 0.1, 'reg_lambda': 5.0}
+      held-out RMSE=0.14489 on 9 row(s)   (too few rows to read much into)
+
+-- generation 13/15 (budget left: 6) --
+  10 parents -> 90 offspring -> 85 unique unseen
+  surrogate predictions: best=0.9036 worst=0.7876
+    training 5-layer model (lr=1.65e-03)...
+[eval 45/50] -> macro_f1=0.9222 acc=0.9849  (368.9s train)
+  real eval #45: predicted=0.9036 actual=0.9222 (error=0.0186)
+    training 5-layer model (lr=1.65e-03)...
+[eval 46/50] -> macro_f1=0.9042 acc=0.9815  (250.2s train)
+  real eval #46: predicted=0.9036 actual=0.9042 (error=0.0006)
+  population best macro_f1=0.9247 (population size 20)
+  [xgboost] n_train=36 n_test=10
+      train  RMSE=0.02185  MAE=0.01144  R2=+0.9265
+      mean-baseline RMSE=0.08059   (train RMSE below this only proves it can memorise)
+      LOO-CV RMSE=0.06767  -> beats baseline
+      best params: {'colsample_bytree': 0.4, 'learning_rate': 0.1, 'max_depth': 2, 'n_estimators': 100, 'reg_alpha': 0.1, 'reg_lambda': 5.0}
+      held-out RMSE=0.14139 on 10 row(s)   (too few rows to read much into)
+
+-- generation 14/15 (budget left: 4) --
+  10 parents -> 90 offspring -> 75 unique unseen
+  surrogate predictions: best=0.9039 worst=0.8175
+    training 5-layer model (lr=8.94e-04)...
+[eval 47/50] -> macro_f1=0.9114 acc=0.9833  (304.8s train)
+  real eval #47: predicted=0.9039 actual=0.9114 (error=0.0075)
+    training 5-layer model (lr=1.43e-03)...
+[eval 48/50] -> macro_f1=0.9071 acc=0.9824  (259.0s train)
+  real eval #48: predicted=0.9039 actual=0.9071 (error=0.0032)
+  population best macro_f1=0.9247 (population size 20)
+  [xgboost] n_train=38 n_test=10
+      train  RMSE=0.01828  MAE=0.01071  R2=+0.9534
+      mean-baseline RMSE=0.08470   (train RMSE below this only proves it can memorise)
+      LOO-CV RMSE=0.06208  -> beats baseline
+      best params: {'colsample_bytree': 0.4, 'learning_rate': 0.3, 'max_depth': 2, 'n_estimators': 50, 'reg_alpha': 0.1, 'reg_lambda': 5.0}
+      held-out RMSE=0.13556 on 10 row(s)   (too few rows to read much into)
+
+-- generation 15/15 (budget left: 2) --
+  10 parents -> 90 offspring -> 77 unique unseen
+  surrogate predictions: best=0.9091 worst=0.7322
+    training 5-layer model (lr=1.43e-03)...
+[eval 49/50] -> macro_f1=0.9177 acc=0.9852  (253.0s train)
+  real eval #49: predicted=0.9091 actual=0.9177 (error=0.0086)
+    training 5-layer model (lr=1.65e-03)...
+[eval 50/50] -> macro_f1=0.9273 acc=0.9860  (385.5s train)
+  real eval #50: predicted=0.9091 actual=0.9273 (error=0.0182)
+  population best macro_f1=0.9273 (population size 20)
+
+Final surrogate dataset (50 rows) saved to C:\Users\dhina\OneDrive\Documents\University\2026\COS 700\Repo\COS700\results\csv\surrogate_dataset.csv
 
 ================================================================================
-bay_opt_outcomes (4 seeds, failed trials excluded)
+Final population (20 architectures)
 ================================================================================
-  id=2185567188176  macro_f1=0.8827
-    ArchitectureConfig(learning_rate=0.0014816254936676765, num_layers=3, layers=[LayerConfig(layer_type='LSTM', hidden_size=161, dropout=0.267622195224764, activation='relu', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=188, dropout=0.2943531289265141, activation='tanh', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=173, dropout=0.1280592755804632, activation='relu', kernel_size=None, bidirectional=False, pooling=None)])
+  macro_f1=0.9273  id=1435597005712
+    ArchitectureConfig(learning_rate=0.0016452138072828432, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=77, dropout=0.3909703441549689, activation='tanh', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=189, dropout=0.08802345330572224, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=123, dropout=0.10736295331293058, activation='tanh', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=252, dropout=0.44814366016431245, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
 
-  id=2194686794656  macro_f1=0.8439
-    ArchitectureConfig(learning_rate=0.00024257377155787152, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=123, dropout=0.391634117082738, activation='tanh', kernel_size=3, bidirectional=None, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=167, dropout=0.008040489237698789, activation='elu', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='CNN', hidden_size=115, dropout=0.42499934937937744, activation='relu', kernel_size=3, bidirectional=None, pooling=None), LayerConfig(layer_type='CNN', hidden_size=85, dropout=0.09493586901446655, activation='relu', kernel_size=3, bidirectional=None, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=210, dropout=0.07050372346499906, activation='relu', kernel_size=None, bidirectional=False, pooling=None)])
+  macro_f1=0.9247  id=1435405265968
+    ArchitectureConfig(learning_rate=0.0014280390064348044, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=77, dropout=0.3909703441549689, activation='tanh', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='GRU', hidden_size=221, dropout=0.0036000319045362134, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=123, dropout=0.10736295331293058, activation='tanh', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=252, dropout=0.44814366016431245, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
 
-  id=2185567141376  macro_f1=0.1811
-    ArchitectureConfig(learning_rate=0.008352745844827043, num_layers=5, layers=[LayerConfig(layer_type='GRU', hidden_size=225, dropout=0.16586263720325428, activation='relu', kernel_size=None, bidirectional=False, pooling=None), LayerConfig(layer_type='GRU', hidden_size=217, dropout=0.4126323929768629, activation='tanh', kernel_size=None, bidirectional=False, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=91, dropout=0.3989788753070796, activation='tanh', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=255, dropout=0.12790993398987643, activation='relu', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='CNN', hidden_size=46, dropout=0.13295385572338464, activation='relu', kernel_size=3, bidirectional=None, pooling=None)])
+  macro_f1=0.9222  id=1434970753360
+    ArchitectureConfig(learning_rate=0.0016452138072828432, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=77, dropout=0.3909703441549689, activation='tanh', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=189, dropout=0.08802345330572224, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=204, dropout=0.048863853637165916, activation='tanh', kernel_size=None, bidirectional=False, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=252, dropout=0.44814366016431245, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
 
-  id=2185567187536  macro_f1=0.1811
-    ArchitectureConfig(learning_rate=0.004875338356137614, num_layers=4, layers=[LayerConfig(layer_type='GRU', hidden_size=181, dropout=0.15839957110805275, activation='relu', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=127, dropout=0.3885444516069888, activation='elu', kernel_size=None, bidirectional=False, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=234, dropout=0.2957464349419926, activation='elu', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='CNN', hidden_size=26, dropout=0.29542106573333077, activation='tanh', kernel_size=5, bidirectional=None, pooling=None)])
+  macro_f1=0.9215  id=1435597004464
+    ArchitectureConfig(learning_rate=0.00043168751219094606, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=121, dropout=0.2615, activation='tanh', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='CNN', hidden_size=77, dropout=0.4631947925956388, activation='relu', kernel_size=5, bidirectional=None, pooling='avg'), LayerConfig(layer_type='LSTM', hidden_size=160, dropout=0.08553135477208462, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=252, dropout=0.44814366016431245, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
+
+  macro_f1=0.9177  id=1435597009648
+    ArchitectureConfig(learning_rate=0.0014280390064348044, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=77, dropout=0.3909703441549689, activation='tanh', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=123, dropout=0.10736295331293058, activation='tanh', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=250, dropout=0.49463843015923525, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
+
+  macro_f1=0.9176  id=1435405263472
+    ArchitectureConfig(learning_rate=0.0008942235215313485, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=141, dropout=0.3231174000946286, activation='relu', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='GRU', hidden_size=256, dropout=0.2822362964876737, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='LSTM', hidden_size=92, dropout=0.08553135477208462, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=250, dropout=0.49463843015923525, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
+
+  macro_f1=0.9165  id=1435405754512
+    ArchitectureConfig(learning_rate=0.0009690443437999982, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=156, dropout=0.35295717951365235, activation='relu', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='GRU', hidden_size=256, dropout=0.2822362964876737, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='LSTM', hidden_size=92, dropout=0.08553135477208462, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=250, dropout=0.49463843015923525, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
+
+  macro_f1=0.9146  id=1435597004656
+    ArchitectureConfig(learning_rate=0.0014280390064348044, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=77, dropout=0.3909703441549689, activation='tanh', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='GRU', hidden_size=221, dropout=0.0036000319045362134, activation='relu', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='LSTM', hidden_size=123, dropout=0.10736295331293058, activation='tanh', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=252, dropout=0.44814366016431245, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
+
+  macro_f1=0.9139  id=1435405270768
+    ArchitectureConfig(learning_rate=0.0014280390064348044, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=77, dropout=0.3909703441549689, activation='tanh', kernel_size=5, bidirectional=None, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=256, dropout=0.2822362964876737, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='LSTM', hidden_size=160, dropout=0.08553135477208462, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=252, dropout=0.44814366016431245, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
+
+  macro_f1=0.9130  id=1435597008016
+    ArchitectureConfig(learning_rate=0.0014280390064348044, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=77, dropout=0.3909703441549689, activation='tanh', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=189, dropout=0.08802345330572224, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=204, dropout=0.048863853637165916, activation='tanh', kernel_size=None, bidirectional=False, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=252, dropout=0.44814366016431245, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
+
+  macro_f1=0.9123  id=1435405261840
+    ArchitectureConfig(learning_rate=0.0014280390064348044, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=77, dropout=0.3909703441549689, activation='tanh', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='GRU', hidden_size=221, dropout=0.0036000319045362134, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=160, dropout=0.08553135477208462, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=252, dropout=0.44814366016431245, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
+
+  macro_f1=0.9121  id=1435405503088
+    ArchitectureConfig(learning_rate=0.0014280390064348044, num_layers=4, layers=[LayerConfig(layer_type='CNN', hidden_size=77, dropout=0.3909703441549689, activation='tanh', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='GRU', hidden_size=256, dropout=0.2822362964876737, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='LSTM', hidden_size=160, dropout=0.08553135477208462, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg')])
+
+  macro_f1=0.9116  id=1435400905616
+    ArchitectureConfig(learning_rate=0.00043168751219094606, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=121, dropout=0.28424502315059186, activation='tanh', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=189, dropout=0.08802345330572224, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=204, dropout=0.048863853637165916, activation='tanh', kernel_size=None, bidirectional=False, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=252, dropout=0.44814366016431245, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
+
+  macro_f1=0.9114  id=1435596472048
+    ArchitectureConfig(learning_rate=0.0008942235215313485, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=141, dropout=0.3231174000946286, activation='relu', kernel_size=7, bidirectional=None, pooling=None), LayerConfig(layer_type='GRU', hidden_size=221, dropout=0.0036000319045362134, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=123, dropout=0.10736295331293058, activation='tanh', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=252, dropout=0.44814366016431245, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
+
+  macro_f1=0.9078  id=1435405506736
+    ArchitectureConfig(learning_rate=0.0025589972158258966, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=130, dropout=0.005619648226866669, activation='relu', kernel_size=3, bidirectional=None, pooling=None), LayerConfig(layer_type='CNN', hidden_size=140, dropout=0.1911864006988712, activation='tanh', kernel_size=5, bidirectional=None, pooling='avg'), LayerConfig(layer_type='LSTM', hidden_size=92, dropout=0.08553135477208462, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=252, dropout=0.44814366016431245, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
+
+  macro_f1=0.9071  id=1435596469840
+    ArchitectureConfig(learning_rate=0.0014280390064348044, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=77, dropout=0.3909703441549689, activation='tanh', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='GRU', hidden_size=221, dropout=0.0036000319045362134, activation='relu', kernel_size=None, bidirectional=False, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=160, dropout=0.08553135477208462, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=252, dropout=0.44814366016431245, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
+
+  macro_f1=0.9065  id=1435405759792
+    ArchitectureConfig(learning_rate=0.0026032426594258615, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=121, dropout=0.28424502315059186, activation='tanh', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=189, dropout=0.08802345330572224, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=61, dropout=0.048863853637165916, activation='tanh', kernel_size=None, bidirectional=False, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=252, dropout=0.44814366016431245, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
+
+  macro_f1=0.9057  id=1435405265584
+    ArchitectureConfig(learning_rate=0.0009690443437999982, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=156, dropout=0.35295717951365235, activation='relu', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='CNN', hidden_size=254, dropout=0.2742496320179134, activation='tanh', kernel_size=3, bidirectional=None, pooling='avg'), LayerConfig(layer_type='CNN', hidden_size=90, dropout=0.0898153714241417, activation='tanh', kernel_size=5, bidirectional=None, pooling='avg'), LayerConfig(layer_type='LSTM', hidden_size=98, dropout=0.28004919735359346, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=256, dropout=0.47416075184569006, activation='elu', kernel_size=None, bidirectional=False, pooling=None)])
+
+  macro_f1=0.9050  id=1435407270544
+    ArchitectureConfig(learning_rate=0.0008611251743062707, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=101, dropout=0.3102315041805423, activation='tanh', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='GRU', hidden_size=246, dropout=0.11377631002995975, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=123, dropout=0.10736295331293058, activation='tanh', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=96, dropout=0.3418812934796537, activation='relu', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=255, dropout=0.4961038039143257, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
+
+  macro_f1=0.9042  id=1435405138256
+    ArchitectureConfig(learning_rate=0.0016452138072828432, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=77, dropout=0.3909703441549689, activation='tanh', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='GRU', hidden_size=221, dropout=0.0036000319045362134, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=123, dropout=0.10736295331293058, activation='tanh', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=67, dropout=0.1132202595839703, activation='relu', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=252, dropout=0.44814366016431245, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
+
 
 ================================================================================
-Best architecture (eval #2): ArchitectureConfig(learning_rate=0.0014816254936676765, num_layers=3, layers=[LayerConfig(layer_type='LSTM', hidden_size=161, dropout=0.267622195224764, activation='relu', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=188, dropout=0.2943531289265141, activation='tanh', kernel_size=None, bidirectional=True, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=173, dropout=0.1280592755804632, activation='relu', kernel_size=None, bidirectional=False, pooling=None)])
-Best fitness: EvaluationResult(accuracy=0.9784135686140141, precision=0.9008323837330066, recall=0.8735986193542932, macro_f1=0.8826601160328396, training_time=560.2149461999943, inference_time=6.588766599976225, avg_cpu=71.89496402877698, peak_cpu=551.2, avg_ram_mb=1314.1631850853548, peak_ram_mb=1531.93359375, peak_gpu_mb=1063.10107421875, peak_memory_mb=1531.93359375, failed=False, error=None)
-Time to best: 989.5s
-Total evaluations: 4, total search time: 1805.8s
+Surrogate dataset: 50 rows x 30 cols (29 features + macro_f1 target)
+  one row per usable evaluation, both phases (50 evaluations made, 20 still in the population)
+================================================================================
+ num_layers  log_learning_rate  gru_count  lstm_count  cnn_count  avg_hidden_size  avg_dropout  gru_avg_hidden_size  lstm_avg_hidden_size  cnn_avg_hidden_size  gru_avg_dropout  lstm_avg_dropout  cnn_avg_dropout  gru_bidirectional_count  lstm_bidirectional_count  gru_relu_count  gru_tanh_count  gru_elu_count  lstm_relu_count  lstm_tanh_count  lstm_elu_count  cnn_relu_count  cnn_tanh_count  cnn_elu_count  cnn_kernel_3_count  cnn_kernel_5_count  cnn_kernel_7_count  max_pool_count  avg_pool_count  macro_f1
+          4          -2.260612          3           1          0       108.500000     0.335746                 70.0            224.000000             0.000000         0.305722          0.425817         0.000000                        1                         1               1               0              2                1                0               0               0               0              0                   0                   0                   0               3               1  0.530028
+          4          -3.777559          2           0          2       187.250000     0.233716                185.5              0.000000           189.000000         0.181123          0.000000         0.286309                        1                         0               0               1              1                0                0               0               0               1              1                   0                   2                   0               3               0  0.852933
+          3          -3.881968          1           0          2       137.666667     0.298594                168.0              0.000000           122.500000         0.009474          0.000000         0.443155                        1                         0               1               0              0                0                0               0               0               1              1                   0                   1                   1               1               1  0.638189
+          4          -3.398025          1           2          1       108.750000     0.090039                 47.0            132.500000           123.000000         0.334379          0.012086         0.001604                        0                         0               0               0              1                1                0               1               0               1              0                   1                   0                   0               0               2  0.683123
+          3          -3.976473          0           1          2       137.000000     0.296710                  0.0             60.000000           175.500000         0.000000          0.038990         0.425570                        0                         0               0               0              0                0                0               1               1               1              0                   2                   0                   0               1               1  0.386757
+          4          -2.022345          2           1          1       137.750000     0.245068                164.0             26.000000           197.000000         0.367264          0.220438         0.025306                        1                         0               2               0              0                0                0               1               1               0              0                   0                   1                   0               0               3  0.819802
+          2          -2.072188          1           1          0       151.500000     0.309119                195.0            108.000000             0.000000         0.401938          0.216301         0.000000                        1                         1               1               0              0                0                0               1               0               0              0                   0                   0                   0               1               1  0.742021
+          4          -2.587095          1           0          3       165.000000     0.328125                223.0              0.000000           145.666667         0.202531          0.000000         0.369990                        1                         0               0               1              0                0                0               0               2               1              0                   1                   2                   0               0               3  0.883987
+          3          -3.034142          1           0          2        89.666667     0.309449                 21.0              0.000000           124.000000         0.446858          0.000000         0.240745                        0                         0               0               1              0                0                0               0               0               1              1                   0                   0                   2               0               2  0.805003
+          1          -2.002690          0           1          0       181.000000     0.214857                  0.0            181.000000             0.000000         0.000000          0.214857         0.000000                        0                         0               0               0              0                1                0               0               0               0              0                   0                   0                   0               0               1  0.794236
+          5          -2.641110          1           0          4        80.400000     0.192324                 19.0              0.000000            95.750000         0.459765          0.000000         0.125464                        0                         0               0               1              0                0                0               0               1               3              0                   1                   3                   0               0               2  0.862073
+          5          -2.613555          1           0          4        70.000000     0.184591                 25.0              0.000000            81.250000         0.479463          0.000000         0.110873                        0                         0               0               1              0                0                0               0               1               3              0                   1                   3                   0               0               2  0.865917
+          5          -2.596158          1           0          4       113.000000     0.195962                133.0              0.000000           108.000000         0.257753          0.000000         0.180514                        0                         0               0               1              0                0                0               0               2               2              0                   2                   2                   0               1               2  0.840096
+          5          -2.688572          1           1          3       167.000000     0.293384                256.0             98.000000           160.333333         0.474161          0.280049         0.237571                        0                         1               0               0              1                0                1               0               1               2              0                   0                   3                   0               0               3  0.901507
+          5          -3.013656          1           2          2       201.600000     0.276782                252.0            173.000000           205.000000         0.448144          0.154279         0.313603                        0                         2               0               0              1                1                1               0               1               1              0                   1                   1                   0               1               3  0.890367
+          5          -3.048554          2           2          1       168.000000     0.301544                253.0             96.500000           141.000000         0.388437          0.203864         0.323117                        1                         2               0               1              1                1                1               0               1               0              0                   0                   1                   0               1               3  0.892763
+          5          -3.064934          2           2          1       164.200000     0.273871                250.5            109.500000           101.000000         0.304940          0.224622         0.310232                        1                         2               1               0              1                1                1               0               0               1              0                   0                   1                   0               2               2  0.904971
+          5          -3.376707          1           3          1       143.000000     0.250509                219.0            135.333333            90.000000         0.123836          0.284061         0.276527                        1                         2               1               0              0                1                1               1               0               1              0                   0                   1                   0               2               1  0.885136
+          4          -2.845260          1           2          1       142.000000     0.160180                221.0            135.000000            77.000000         0.003600          0.123074         0.390970                        1                         2               1               0              0                1                1               0               0               1              0                   0                   1                   0               2               1  0.896077
+          5          -3.364831          1           3          1       141.400000     0.216663                192.0            131.333333           121.000000         0.332597          0.155492         0.284245                        1                         2               0               0              1                2                1               0               0               1              0                   0                   1                   0               2               2  0.884265
+          5          -2.596158          1           1          3       171.800000     0.221933                256.0             98.000000           168.333333         0.474161          0.280049         0.118485                        0                         1               0               0              1                0                1               0               1               2              0                   1                   2                   0               0               3  0.889261
+          5          -3.013656          1           1          3       170.800000     0.294246                256.0             98.000000           166.666667         0.474161          0.280049         0.239007                        0                         1               0               0              1                0                1               0               1               2              0                   1                   2                   0               0               3  0.905709
+          5          -2.591930          1           2          2       173.600000     0.190701                252.0            173.000000           135.000000         0.448144          0.154279         0.098403                        0                         2               0               0              1                1                1               0               1               1              0                   1                   1                   0               1               3  0.907823
+          5          -2.584485          1           3          1       175.400000     0.218460                252.0            168.000000           121.000000         0.448144          0.119971         0.284245                        0                         2               0               0              1                1                2               0               0               1              0                   0                   1                   0               2               2  0.906501
+          5          -3.013656          2           2          1       201.600000     0.287678                253.0            173.000000           156.000000         0.388437          0.154279         0.352957                        1                         2               0               1              1                1                1               0               1               0              0                   0                   1                   0               1               3  0.916482
+          5          -3.013656          0           2          3       158.600000     0.190822                  0.0            173.000000           149.000000         0.000000          0.154279         0.215184                        0                         2               0               0              0                1                1               0               1               2              0                   1                   2                   0               1               2  0.637848
+          5          -3.364831          1           3          1       181.600000     0.249072                250.0            179.000000           121.000000         0.494638          0.155492         0.284245                        0                         2               0               0              1                2                1               0               0               1              0                   0                   1                   0               2               2  0.895875
+          5          -3.364831          1           3          1       204.000000     0.218460                252.0            215.666667           121.000000         0.448144          0.119971         0.284245                        0                         2               0               0              1                1                2               0               0               1              0                   0                   1                   0               2               2  0.911626
+          5          -2.845260          2           2          1       192.800000     0.230254                236.5            207.000000            77.000000         0.225872          0.154279         0.390970                        1                         2               1               0              1                1                1               0               0               1              0                   0                   1                   0               2               2  0.912297
+          5          -3.064934          2           2          1       195.200000     0.240508                249.0            188.500000           101.000000         0.280960          0.165194         0.310232                        1                         2               1               0              1                0                2               0               0               1              0                   0                   1                   0               2               2  0.894317
+          4          -3.013656          1           2          1       142.750000     0.208486                256.0             79.500000           156.000000         0.282236          0.099376         0.352957                        1                         2               0               1              0                2                0               0               1               0              0                   0                   1                   0               1               2  0.896938
+          5          -3.064934          1           3          1       163.800000     0.260961                256.0            135.666667           156.000000         0.282236          0.223204         0.352957                        1                         3               0               1              0                3                0               0               1               0              0                   0                   1                   0               1               3  0.886447
+          5          -2.845260          1           3          1       195.200000     0.239805                252.0            215.666667            77.000000         0.448144          0.119971         0.390970                        0                         2               0               0              1                1                2               0               0               1              0                   0                   1                   0               2               2  0.913031
+          4          -3.364831          1           0          3       138.000000     0.295220                223.0              0.000000           109.666667         0.202531          0.000000         0.326116                        1                         0               0               1              0                0                0               0               1               2              0                   0                   3                   0               0               3  0.894363
+          5          -2.027100          1           3          1       197.800000     0.216917                252.0            215.666667            90.000000         0.448144          0.119971         0.276527                        0                         2               0               0              1                1                2               0               0               1              0                   0                   1                   0               2               2  0.774508
+          4          -2.845260          1           2          1       186.750000     0.245441                256.0            207.000000            77.000000         0.282236          0.154279         0.390970                        1                         2               0               1              0                1                1               0               0               1              0                   0                   1                   0               1               2  0.912137
+          5          -2.845260          2           2          1       199.800000     0.285981                254.0            207.000000            77.000000         0.365190          0.154279         0.390970                        1                         2               0               1              1                1                1               0               0               1              0                   0                   1                   0               2               3  0.913886
+          5          -3.048554          2           2          1       198.600000     0.281710                253.0            173.000000           141.000000         0.388437          0.154279         0.323117                        1                         2               0               1              1                1                1               0               1               0              0                   0                   1                   0               1               3  0.917552
+          5          -2.845260          2           2          1       185.400000     0.234621                236.5            188.500000            77.000000         0.225872          0.165194         0.390970                        1                         2               1               0              1                0                2               0               0               1              0                   0                   1                   0               2               2  0.924719
+          5          -2.364533          2           2          1       198.600000     0.281710                253.0            173.000000           141.000000         0.388437          0.154279         0.323117                        1                         2               0               1              1                1                1               0               1               0              0                   0                   1                   0               1               3  0.872206
+          5          -2.845260          2           2          1       192.400000     0.290348                254.0            188.500000            77.000000         0.365190          0.165194         0.390970                        1                         2               0               1              1                0                2               0               0               1              0                   0                   1                   0               1               3  0.902967
+          5          -2.845260          2           2          1       185.400000     0.234621                236.5            188.500000            77.000000         0.225872          0.165194         0.390970                        1                         2               1               0              1                0                2               0               0               1              0                   0                   1                   0               1               3  0.914638
+          5          -3.364831          1           2          2       172.800000     0.296279                252.0            207.000000            99.000000         0.448144          0.154279         0.362347                        0                         2               0               0              1                1                1               0               1               1              0                   0                   2                   0               1               3  0.921491
+          4          -2.442635          1           2          1       197.750000     0.236274                256.0            229.000000            77.000000         0.282236          0.135945         0.390970                        1                         1               0               1              0                0                2               0               0               1              0                   0                   1                   0               2               2  0.875644
+          5          -2.783778          1           3          1       195.200000     0.239805                252.0            215.666667            77.000000         0.448144          0.119971         0.390970                        0                         2               0               0              1                1                2               0               0               1              0                   0                   1                   0               2               2  0.922191
+          5          -2.783778          2           2          1       148.000000     0.212659                236.5             95.000000            77.000000         0.225872          0.110292         0.390970                        1                         2               1               0              1                1                1               0               0               1              0                   0                   1                   0               2               2  0.904186
+          5          -3.048554          2           2          1       198.200000     0.221050                236.5            188.500000           141.000000         0.225872          0.165194         0.323117                        1                         2               1               0              1                0                2               0               1               0              0                   0                   0                   1               2               2  0.911393
+          5          -2.845260          2           2          1       192.800000     0.230254                236.5            207.000000            77.000000         0.225872          0.154279         0.390970                        0                         2               1               0              1                1                1               0               0               1              0                   0                   1                   0               2               2  0.907113
+          5          -2.845260          1           3          1       191.600000     0.287805                250.0            210.333333            77.000000         0.494638          0.184471         0.390970                        0                         3               0               0              1                0                3               0               0               1              0                   0                   1                   0               1               3  0.917713
+          5          -2.783778          1           3          1       179.000000     0.251505                252.0            188.666667            77.000000         0.448144          0.139471         0.390970                        0                         3               0               0              1                1                2               0               0               1              0                   0                   1                   0               2               2  0.927302
+
+target spread: min=0.3868 max=0.9273 mean=0.8549 std=0.1075 distinct=50/50
+
+================================================================================
+Surrogate report - xgboost (leave-one-out CV RMSE, lower is better)
+================================================================================
+model            CV RMSE  train RMSE  train R2  vs baseline  verdict
+--------------------------------------------------------------------------------
+xgboost          0.06208     0.01828   +0.9534        1.36x  USEFUL
+--------------------------------------------------------------------------------
+mean-baseline RMSE = 0.08470  (predicting the training mean for every architecture)
+A surrogate is only worth using if its CV RMSE beats that number.
+
+================================================================================
+Best architecture (eval #50 of 50): ArchitectureConfig(learning_rate=0.0016452138072828432, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=77, dropout=0.3909703441549689, activation='tanh', kernel_size=5, bidirectional=None, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=189, dropout=0.08802345330572224, activation='relu', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=123, dropout=0.10736295331293058, activation='tanh', kernel_size=None, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=254, dropout=0.22302568044799875, activation='tanh', kernel_size=None, bidirectional=True, pooling='avg'), LayerConfig(layer_type='GRU', hidden_size=252, dropout=0.44814366016431245, activation='elu', kernel_size=None, bidirectional=False, pooling='avg')])
+Best fitness: EvaluationResult(accuracy=0.9859516875107076, precision=0.953888255313557, recall=0.9051339742439858, macro_f1=0.9273018258712635, training_time=385.4736373999913, inference_time=4.477296500001103, avg_cpu=105.39908496732026, peak_cpu=588.3, avg_ram_mb=419.7960335753916, peak_ram_mb=429.59375, peak_gpu_mb=820.939453125, peak_memory_mb=820.939453125, failed=False, error=None)
+Time to best: 11858.3s
+Evaluations: 50/50 (20 Bayesian + 30 neuroevolution)
+Found in phase: neuroevolution
+Total search time: 11858.3s

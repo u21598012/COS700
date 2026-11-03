@@ -1,8 +1,4 @@
-"""Artifact storage (framework spec, Phase 12).
 
-Saves models, candidate architectures, predictions, search-progress and plots to
-``results/`` so they can also be logged to MLflow.
-"""
 
 import json
 
@@ -14,13 +10,11 @@ from src.utils import paths
 
 
 def initialize_artifacts():
-    """Ensure every artifact directory exists."""
     paths.ensure_dirs()
 
 
 # --------------------------------------------------------------------------
 def save_architecture(architecture, name, directory=None):
-    """Persist an ArchitectureConfig as JSON; returns the file path."""
     directory = paths.ARCHITECTURES_DIR if directory is None else paths.resolve(directory)
     directory.mkdir(parents=True, exist_ok=True)
     filepath = directory / f"{name}.json"
@@ -31,7 +25,6 @@ def save_architecture(architecture, name, directory=None):
 
 
 def save_model(model, name, directory=None):
-    """Save a model's ``state_dict`` to ``results/models/<name>.pt``."""
     directory = paths.MODELS_DIR if directory is None else paths.resolve(directory)
     directory.mkdir(parents=True, exist_ok=True)
     filepath = directory / f"{name}.pt"
@@ -50,7 +43,6 @@ def save_predictions(y_true, y_pred, name, directory=None):
 
 
 def save_search_progress(rows, name, directory=None):
-    """``rows`` is a list of dicts (one per evaluation)."""
     directory = paths.LOGS_DIR if directory is None else paths.resolve(directory)
     directory.mkdir(parents=True, exist_ok=True)
     filepath = directory / f"{name}.csv"
@@ -59,7 +51,6 @@ def save_search_progress(rows, name, directory=None):
 
 
 def save_confusion_matrix(cm, name, class_names=None, directory=None):
-    """Render a confusion matrix to PNG. Returns None if matplotlib is absent."""
     directory = paths.PLOTS_DIR if directory is None else paths.resolve(directory)
     directory.mkdir(parents=True, exist_ok=True)
     filepath = directory / f"{name}.png"

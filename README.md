@@ -1,80 +1,76 @@
-# COS700 — ECG Neural Architecture Search Framework
+# COS700
 
-A reproducible framework for comparing **Random Search**, **Bayesian Optimization**,
-**Neuroevolution**, and a **BO + Neuroevolution Hybrid** for neural architecture
-search on the MIT-BIH Arrhythmia dataset. All algorithms share identical dataset
-splits, search space, evaluator, logging, and resource monitoring.
-
-See [experimentation_framework.md](experimentation_framework.md) for the full spec.
+Compares Random Search, Bayesian Optimization, Neuroevolution and a BO + Neuroevolution hybrid for neural architecture search on the MIT-BIH Arrhythmia dataset.
 
 ## Setup
 
+Clone the repo, then from the repo folder:
+
 ```bash
 python -m venv venv
-venv\Scripts\activate          # Windows
+venv\Scripts\activate
 pip install -r requirements.txt
+pip install optuna==4.9.0 xgboost==3.4.0
 ```
 
-Place the MIT-BIH CSVs at `data/raw/mitbih_train.csv` and `data/raw/mitbih_test.csv`.
+On Mac or Linux, activate with `source venv/bin/activate`.
 
-**Fixed splits:** the framework only *loads* splits — it never creates them. Create
-`data/splits/{train,val,test}_idx.npy` once yourself first (train_idx/val_idx index
-`mitbih_train.csv` rows; test_idx indexes `mitbih_test.csv` rows). They are then
-reused unchanged by every run.
-
-## Quickstart
+To train on an NVIDIA GPU, also run:
 
 ```bash
-# tiny end-to-end sanity run (a few seconds): trains, logs, writes the DB + CSVs
-# (requires the split files to already exist)
-python main.py --smoke
+pip install torch==2.11.0 --index-url https://download.pytorch.org/whl/cu128
+```
 
-# full experiment defined in configs/experiment.yaml
+The data splits are already in `data/splits/`, so there is nothing to download.
+
+## Check it works
+
+This runs a very small experiment, 2 seeds with 3 networks each:
+
+```bash
+python main.py --smoke
+```
+
+## Run an experiment
+
+```bash
 python main.py
 ```
 
-Or open [notebooks/experiment_runner.ipynb](notebooks/experiment_runner.ipynb) and
-run the cells. Use [notebooks/setup_validation.ipynb](notebooks/setup_validation.ipynb)
-to verify the environment first.
+This uses the settings in `configs/experiment.yaml`. By default it runs the hybrid on 3 seeds, training 50 networks per seed for 10 epochs each. A single seed can take a few hours on a GPU.
 
-## Where results land
+## Choose an algorithm
 
-| Output | Location |
-| --- | --- |
-| SQLite results DB | `results/database/results.db` (tables: `experiments`, `runs`, `evaluations`, `best_models`) |
-| Run/eval CSVs | `results/csv/runs.csv`, `results/csv/evaluations.csv` |
-| Best models / architectures | `results/models/`, `results/architectures/` |
-| MLflow runs | `mlflow.db` (view with `mlflow ui --backend-store-uri sqlite:///mlflow.db`) |
-
-## Configuration (`configs/`)
-
-| File | Controls |
-| --- | --- |
-| `experiment.yaml` | algorithm, seeds, budget, training settings, smoke knobs |
-| `search_space.yaml` | global + per-layer search ranges |
-| `dataset.yaml` | dataset paths, splits, preprocessing, dataloader |
-| `tracking.yaml` | MLflow / database / artifact / export settings |
-
-## Adding your model architectures
-
-The infrastructure is complete and runnable. The **only** thing to implement is how
-an architecture spec becomes real PyTorch layers, in
-[`src/models/architecture_builder.py`](src/models/architecture_builder.py)
-(`build_model`). A placeholder MLP ships so the pipeline runs today; replace it with
-your CNN/LSTM/GRU construction and nothing else needs to change.
-
-## Project layout
-
+```bash
+python main.py --algorithm random_search
+python main.py --algorithm bayesian_optimization
+python main.py --algorithm neuroevolution
+python main.py --algorithm bayesian_optimization_neuroevolution_hybrid
 ```
-configs/      YAML configuration
-src/
-  algorithms/   search strategies (random_search implemented; others stubbed)
-  data/         loading, preprocessing, fixed splits, dataloaders
-  models/       architecture schema, search space, model builder (your layers)
-  evaluation/   evaluator, metrics, profiler (resource monitor), timer
-  tracking/     SQLite DB, MLflow logger, artifacts, CSV export
-  experiment/   per-seed Runner + ExperimentManager orchestration
-  utils/        config, paths, seeding, system info
-notebooks/    setup_validation.ipynb, experiment_runner.ipynb
-results/      DB, CSVs, models, plots, logs (generated)
+
+## Other options
+
+```bash
+python main.py --seeds 11 22 33
+python main.py --budget 20
+python main.py --epochs 5
+python main.py --device cpu
+```
+
+`--budget` is the number of networks trained per seed. `--device` can be `auto`, `cpu` or `cuda`.
+
+Options can be combined:
+
+```bash
+python main.py --algorithm neuroevolution --seeds 11 22 --budget 20 --epochs 5
+```
+
+To change the defaults, edit `configs/experiment.yaml`. To run all 30 seeds from the study, uncomment the seeds in that file. Hybrid settings are under `algorithm_params` in the same file. The search space is in `configs/search_space.yaml`.
+
+## Results
+
+Results are saved to `results/database/results.db`, with CSV exports in `results/csv/`. MLflow runs are saved to `mlflow.db`. To view them:
+
+```bash
+mlflow ui --backend-store-uri sqlite:///mlflow.db
 ```

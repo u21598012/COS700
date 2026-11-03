@@ -2,10 +2,27 @@ experiment_name: MITBIH_RS
 tracking_uri: sqlite:///mlflow.db
 
 # algorithm: random_search
-algorithm: neuroevolution
+# algorithm: neuroevolution
+# algorithm: bayesian_optimization
+algorithm: bayesian_optimization_neuroevolution_hybrid
 
-# Metric used to pick the best candidate within a run (field of EvaluationResult).
 selection_metric: macro_f1
+
+algorithm_params:
+
+  bayesian_optimization_neuroevolution_hybrid:
+    bo_fraction: 0.4
+
+    num_selections: 10
+
+    mutation_rate: 0.5
+    crossover_rate: 0.5
+
+    num_final_selections: 2
+
+    surrogate: xgboost
+
+    verbose: false
 
 runs: 30
 
@@ -32,33 +49,28 @@ seeds:
   # - 5774201
   # - 3458990
   # - 1092684
-  - 6011572
-  - 4825337
-  - 219764
-  - 2570418
-  - 5331909
+  # - 6011572
+  # - 4825337
+  # - 219764
+  # - 2570418
+  # - 5331909
   - 3884276
   - 1498057
   - 6669123
 
 budget:
-
   evaluations: 50
 
 training:
-
   epochs: 10
 
   batch_size: 128
 
-  # Optional caps for fast smoke runs (null = use everything).
   max_train_batches: null
 
   max_eval_batches: null
 
-# Optional dataset subsetting for fast smoke runs (null = full dataset).
 data:
-
   max_train_samples: null
 
   max_val_samples: null
