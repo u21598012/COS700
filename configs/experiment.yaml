@@ -1,0 +1,80 @@
+experiment_name: MITBIH_RS
+tracking_uri: sqlite:///mlflow.db
+
+# algorithm: random_search
+# algorithm: neuroevolution
+# algorithm: bayesian_optimization
+algorithm: bayesian_optimization_neuroevolution_hybrid
+
+selection_metric: macro_f1
+
+algorithm_params:
+
+  bayesian_optimization_neuroevolution_hybrid:
+    bo_fraction: 0.4
+
+    num_selections: 10
+
+    mutation_rate: 0.5
+    crossover_rate: 0.5
+
+    num_final_selections: 2
+
+    surrogate: xgboost
+
+    verbose: false
+
+runs: 30
+
+seeds:
+  # - 5912847
+  # - 1384225
+  # - 6103771
+  # - 482916
+  # - 2947183
+  # - 5026490
+  # - 3771654
+  # - 128503
+  # - 6521908
+  # - 2214775
+  # - 4638192
+  # - 875441
+  # - 5487026
+  # - 3092518
+  # - 1761334
+  # - 6248910
+  # - 4102673
+  # - 567829
+  # - 2839145
+  # - 5774201
+  # - 3458990
+  # - 1092684
+  # - 6011572
+  # - 4825337
+  # - 219764
+  # - 2570418
+  # - 5331909
+  - 3884276
+  - 1498057
+  - 6669123
+
+budget:
+  evaluations: 50
+
+training:
+  epochs: 10
+
+  batch_size: 128
+
+  max_train_batches: null
+
+  max_eval_batches: null
+
+data:
+  max_train_samples: null
+
+  max_val_samples: null
+
+  max_test_samples: null
+
+  nrows: null

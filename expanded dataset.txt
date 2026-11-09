@@ -1,0 +1,126 @@
+# Target / ID
+id
+macro_f1
+
+# Global
+num_layers
+learning_rate
+log_learning_rate
+
+# Layer composition
+gru_count
+lstm_count
+cnn_count
+
+gru_fraction
+lstm_fraction
+cnn_fraction
+
+# -------------------------
+# GRU hidden size
+# -------------------------
+gru_hidden_mean
+gru_hidden_std
+gru_hidden_min
+gru_hidden_max
+gru_hidden_total
+
+# GRU dropout
+gru_dropout_mean
+gru_dropout_std
+gru_dropout_min
+gru_dropout_max
+gru_dropout_total
+
+# GRU properties
+gru_relu_count
+gru_tanh_count
+gru_elu_count
+gru_bidirectional_count
+
+# -------------------------
+# LSTM hidden size
+# -------------------------
+lstm_hidden_mean
+lstm_hidden_std
+lstm_hidden_min
+lstm_hidden_max
+lstm_hidden_total
+
+# LSTM dropout
+lstm_dropout_mean
+lstm_dropout_std
+lstm_dropout_min
+lstm_dropout_max
+lstm_dropout_total
+
+# LSTM properties
+lstm_relu_count
+lstm_tanh_count
+lstm_elu_count
+lstm_bidirectional_count
+
+# -------------------------
+# CNN hidden size
+# -------------------------
+cnn_hidden_mean
+cnn_hidden_std
+cnn_hidden_min
+cnn_hidden_max
+cnn_hidden_total
+
+# CNN dropout
+cnn_dropout_mean
+cnn_dropout_std
+cnn_dropout_min
+cnn_dropout_max
+cnn_dropout_total
+
+# CNN properties
+cnn_relu_count
+cnn_tanh_count
+cnn_elu_count
+
+cnn_kernel_3_count
+cnn_kernel_5_count
+cnn_kernel_mean
+cnn_kernel_min
+cnn_kernel_max
+
+# -------------------------
+# Overall capacity
+# -------------------------
+total_hidden_units
+mean_hidden_size
+std_hidden_size
+min_hidden_size
+max_hidden_size
+
+total_dropout
+mean_dropout
+std_dropout
+min_dropout
+max_dropout
+
+# -------------------------
+# Architecture ordering
+# -------------------------
+first_layer_gru
+first_layer_lstm
+first_layer_cnn
+
+last_layer_gru
+last_layer_lstm
+last_layer_cnn
+
+gru_to_gru_count
+gru_to_lstm_count
+gru_to_cnn_count
+
+lstm_to_gru_count
+lstm_to_lstm_count
+lstm_to_cnn_count
+
+cnn_to_gru_count
+cnn_to_lstm_count
+cnn_to_cnn_count

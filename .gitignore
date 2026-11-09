@@ -1,0 +1,41 @@
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# Large raw data (do NOT commit the MIT-BIH CSVs ~ hundreds of MB)
+data/raw/
+data/processed/
+
+# Keep the fixed splits committed (framework spec, Phase 4):
+!data/splits/
+!data/splits/*.npy
+
+# Experiment outputs
+results/
+mlruns/
+mlartifacts/
+mlflow.db
+
+# OS / editor
+desktop.ini
+.DS_Store
+.vscode/
+
+stash/
+
+docs/
+
+slides/
+
+tests/
+
+analysis/figures/
+
+*.db

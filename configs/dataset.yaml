@@ -1,0 +1,39 @@
+dataset:
+
+  name: mitbih
+
+  root_dir: data/raw
+
+  train_file: mitbih_train.csv
+
+  test_file: mitbih_test.csv
+
+  num_classes: 5
+
+  signal_length: 187
+
+splits:
+
+  train_indices: data/splits/train_idx.npy
+
+  val_indices: data/splits/val_idx.npy
+
+  test_indices: data/splits/test_idx.npy
+
+preprocessing:
+
+  normalize: true
+
+  normalization_method: zscore
+
+  shuffle_train: true
+
+  num_workers: 0
+
+dataloader:
+
+  batch_size: 128
+
+  pin_memory: true
+
+  persistent_workers: true

@@ -1,0 +1,276 @@
+======================= Mutation Complete ================================================================================
+Crossover Phase: 
+
+Crossover Comparison: 
+
+Parent 1 Architecture ID: 1613337342800 selected for crossover, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=2, layers=[LayerConfig(layer_type='CNN', hidden_size=56, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None)])
+--------------------------------------------------------------------------------
+Parent 2 Architecture ID: 1613337828368 selected for crossover, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=3, layers=[LayerConfig(layer_type='CNN', hidden_size=56, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.093, activation='relu', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=136, dropout=0.0434, activation='tanh', kernel_size=3, bidirectional=False, pooling='max')])
+
+
+Single-point crossover selected. 
+
+Crossover Results:
+
+Child Architecture ID: 1613339295376 created from crossover, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=3, layers=[LayerConfig(layer_type='CNN', hidden_size=56, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.093, activation='relu', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=136, dropout=0.0434, activation='tanh', kernel_size=3, bidirectional=False, pooling='max')])
+
+
+Child Architecture ID: 1613339288560 created from crossover, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=2, layers=[LayerConfig(layer_type='CNN', hidden_size=56, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None)])
+
+
+================================================================================ Crossover Complete ================================================================================
+[eval 103] training 2-layer model...
+    -> macro_f1=0.7525 acc=0.9579  (131.3s train)
+
+
+[eval 104] training 2-layer model...
+    -> macro_f1=0.9243 acc=0.9856  (311.2s train)
+
+
+[eval 105] training 3-layer model...
+    -> macro_f1=0.9062 acc=0.9815  (136.3s train)
+
+
+[eval 106] training 2-layer model...
+    -> macro_f1=0.8861 acc=0.9788  (94.7s train)
+
+
+Population Update Architecture ID: 1613331842448
+
+
+Population Update Architecture ID: 1613330137360
+
+
+Population Update Architecture ID: 1613339295376
+
+
+Population Update Architecture ID: 1613339288560
+
+
+Adding architecture ID: 1613331842448 to population, Architecture: ArchitectureConfig(learning_rate=0.004625100014812056, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=28, dropout=0.1562, activation='relu', kernel_size=3, bidirectional=False, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=207, dropout=0.325, activation='tanh', kernel_size=7, bidirectional=True, pooling=None)]), Fitness: EvaluationResult(accuracy=0.9579121694934613, precision=0.8874860303366752, recall=0.6889507506878391, macro_f1=0.7525173927559048, training_time=131.29543509997893, inference_time=1.3349848000798374, avg_cpu=114.78697318007663, peak_cpu=510.7, avg_ram_mb=388.17121898854964, peak_ram_mb=388.77734375, peak_gpu_mb=638.84130859375, peak_memory_mb=638.84130859375, failed=False, error=None)
+Adding architecture ID: 1613330137360 to population, Architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None)]), Fitness: EvaluationResult(accuracy=0.9855519387813374, precision=0.9466922659987878, recall=0.906598041927732, macro_f1=0.92429609970171, training_time=311.15753600001335, inference_time=3.1939483999740332, avg_cpu=79.47341977309563, peak_cpu=504.2, avg_ram_mb=387.4325065736246, peak_ram_mb=390.29296875, peak_gpu_mb=968.30810546875, peak_memory_mb=968.30810546875, failed=False, error=None)
+Adding architecture ID: 1613339295376 to population, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=3, layers=[LayerConfig(layer_type='CNN', hidden_size=56, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.093, activation='relu', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=136, dropout=0.0434, activation='tanh', kernel_size=3, bidirectional=False, pooling='max')]), Fitness: EvaluationResult(accuracy=0.9814973445262978, precision=0.9364003076332985, recall=0.8811235541426615, macro_f1=0.9061986220697327, training_time=136.30998360004742, inference_time=1.6925205000443384, avg_cpu=113.47074074074074, peak_cpu=503.1, avg_ram_mb=389.50043242619927, peak_ram_mb=390.265625, peak_gpu_mb=390.06396484375, peak_memory_mb=390.265625, failed=False, error=None)
+Removing architecture ID: 1613331842448 from population, Architecture: ArchitectureConfig(learning_rate=0.004625100014812056, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=28, dropout=0.1562, activation='relu', kernel_size=3, bidirectional=False, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=207, dropout=0.325, activation='tanh', kernel_size=7, bidirectional=True, pooling=None)]), Fitness: EvaluationResult(accuracy=0.9579121694934613, precision=0.8874860303366752, recall=0.6889507506878391, macro_f1=0.7525173927559048, training_time=131.29543509997893, inference_time=1.3349848000798374, avg_cpu=114.78697318007663, peak_cpu=510.7, avg_ram_mb=388.17121898854964, peak_ram_mb=388.77734375, peak_gpu_mb=638.84130859375, peak_memory_mb=638.84130859375, failed=False, error=None)
+Removing architecture ID: 1613025956144 from population, Architecture: ArchitectureConfig(learning_rate=0.004625100014812056, num_layers=2, layers=[LayerConfig(layer_type='LSTM', hidden_size=46, dropout=0.0715, activation='relu', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=207, dropout=0.325, activation='tanh', kernel_size=7, bidirectional=True, pooling=None)]), Fitness: EvaluationResult(accuracy=0.9763006110444863, precision=0.9173037950561211, recall=0.8662389292206779, macro_f1=0.8895995000701863, training_time=139.48693959997036, inference_time=1.3075353000313044, avg_cpu=113.23586956521739, peak_cpu=495.6, avg_ram_mb=1264.2173256994586, peak_ram_mb=1265.8515625, peak_gpu_mb=698.18701171875, peak_memory_mb=1265.8515625, failed=False, error=None)
+Removing architecture ID: 1613335712816 from population, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None)]), Fitness: EvaluationResult(accuracy=0.9788704243047227, precision=0.939124430878586, recall=0.8546838135033672, macro_f1=0.8896752887747302, training_time=307.6987620999571, inference_time=3.148506799945608, avg_cpu=79.49655737704919, peak_cpu=496.8, avg_ram_mb=540.9822844210311, peak_ram_mb=544.6640625, peak_gpu_mb=968.30810546875, peak_memory_mb=968.30810546875, failed=False, error=None)
+================================================================================
+13174.968789339066 seconds elapsed
+Generation 30/30
+--------------------------------------------------------------------------------
+
+
+Population Architecture ID: 1613786896080, Architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='CNN', hidden_size=244, dropout=0.1372, activation='relu', kernel_size=5, bidirectional=True, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.9817828793329907, precision=0.9217186394639063, recall=0.891950486188421, macro_f1=0.9060482680770923, training_time=153.68011319998186, inference_time=1.2401215999852866, avg_cpu=111.7095394736842, peak_cpu=491.5, avg_ram_mb=1240.5936091188526, peak_ram_mb=1242.0703125, peak_gpu_mb=488.23046875, peak_memory_mb=1242.0703125, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613339281168, Architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=3, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=25, dropout=0.2214, activation='elu', kernel_size=7, bidirectional=True, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.9808691679515733, precision=0.9408548594696245, recall=0.8622685939270479, macro_f1=0.8973668752041256, training_time=317.7605913999723, inference_time=3.2620960000203922, avg_cpu=79.28744038155803, peak_cpu=514.6, avg_ram_mb=890.9895089285715, peak_ram_mb=1114.734375, peak_gpu_mb=968.96435546875, peak_memory_mb=1114.734375, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613328448784, Architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=1, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None)]), Fitness: EvaluationResult(accuracy=0.9791559591114157, precision=0.9382931158892521, recall=0.8606668004834042, macro_f1=0.8942350734327638, training_time=125.32942530000582, inference_time=0.9425236999522895, avg_cpu=115.29433198380568, peak_cpu=501.8, avg_ram_mb=766.3326455393145, peak_ram_mb=767.05078125, peak_gpu_mb=483.931640625, peak_memory_mb=767.05078125, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613334881840, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=3, layers=[LayerConfig(layer_type='CNN', hidden_size=56, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=136, dropout=0.0434, activation='tanh', kernel_size=3, bidirectional=False, pooling='max')]), Fitness: EvaluationResult(accuracy=0.9800696704928331, precision=0.9042665151641452, recall=0.8927410092901764, macro_f1=0.896465078163272, training_time=140.33759900007863, inference_time=1.6607133999932557, avg_cpu=114.0115107913669, peak_cpu=531.4, avg_ram_mb=767.2455337141577, peak_ram_mb=768.609375, peak_gpu_mb=390.06396484375, peak_memory_mb=768.609375, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613335590672, Architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='CNN', hidden_size=244, dropout=0.1422, activation='relu', kernel_size=5, bidirectional=True, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.9821826280623608, precision=0.922221724120132, recall=0.8934110102608315, macro_f1=0.9072718059770919, training_time=163.38915419997647, inference_time=1.2273400999838486, avg_cpu=111.92267080745341, peak_cpu=514.5, avg_ram_mb=768.1677752515479, peak_ram_mb=769.53515625, peak_gpu_mb=488.23046875, peak_memory_mb=769.53515625, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613339293264, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=3, layers=[LayerConfig(layer_type='CNN', hidden_size=28, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=136, dropout=0.0434, activation='tanh', kernel_size=3, bidirectional=False, pooling='max')]), Fitness: EvaluationResult(accuracy=0.9817257723716522, precision=0.9266374660605351, recall=0.8952831529598976, macro_f1=0.9096613197502643, training_time=132.6234598000301, inference_time=1.6966094999806955, avg_cpu=113.46615969581748, peak_cpu=500.5, avg_ram_mb=769.4661606297349, peak_ram_mb=771.375, peak_gpu_mb=380.52587890625, peak_memory_mb=771.375, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613339288656, Architecture: ArchitectureConfig(learning_rate=0.0041434801184385035, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=124, dropout=0.0394, activation='tanh', kernel_size=3, bidirectional=False, pooling='avg'), LayerConfig(layer_type='CNN', hidden_size=244, dropout=0.1372, activation='relu', kernel_size=5, bidirectional=True, pooling=None)]), Fitness: EvaluationResult(accuracy=0.9795557078407858, precision=0.9195914836169641, recall=0.8758839793868315, macro_f1=0.8940606324028695, training_time=33.78844829997979, inference_time=0.3647168999304995, avg_cpu=150.0358208955224, peak_cpu=483.4, avg_ram_mb=539.7926240808823, peak_ram_mb=541.11328125, peak_gpu_mb=335.015625, peak_memory_mb=541.11328125, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613339291920, Architecture: ArchitectureConfig(learning_rate=0.001801956185291575, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=201, dropout=0.0231, activation='relu', kernel_size=5, bidirectional=False, pooling='avg'), LayerConfig(layer_type='CNN', hidden_size=93, dropout=0.1544, activation='relu', kernel_size=7, bidirectional=True, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.9817828793329907, precision=0.931168001434223, recall=0.8927326194332785, macro_f1=0.9105720830572999, training_time=81.70330980001017, inference_time=0.8242202000692487, avg_cpu=122.49567901234568, peak_cpu=444.8, avg_ram_mb=541.7449434432515, peak_ram_mb=542.953125, peak_gpu_mb=251.09130859375, peak_memory_mb=542.953125, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613001005808, Architecture: ArchitectureConfig(learning_rate=0.003884958357856255, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=56, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='avg'), LayerConfig(layer_type='LSTM', hidden_size=134, dropout=0.3673, activation='relu', kernel_size=3, bidirectional=False, pooling=None), LayerConfig(layer_type='GRU', hidden_size=179, dropout=0.263, activation='elu', kernel_size=3, bidirectional=False, pooling='avg'), LayerConfig(layer_type='LSTM', hidden_size=20, dropout=0.0315, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='CNN', hidden_size=177, dropout=0.2939, activation='relu', kernel_size=3, bidirectional=True, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.9787562103820455, precision=0.9226141682297074, recall=0.874974904898921, macro_f1=0.8961073152539791, training_time=99.80682729999535, inference_time=1.1617529999930412, avg_cpu=118.04545454545455, peak_cpu=502.9, avg_ram_mb=542.1222518844221, peak_ram_mb=542.60546875, peak_gpu_mb=310.60888671875, peak_memory_mb=542.60546875, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613335589232, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=192, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='CNN', hidden_size=93, dropout=0.1544, activation='relu', kernel_size=7, bidirectional=True, pooling='max')]), Fitness: EvaluationResult(accuracy=0.9820113071783451, precision=0.9140591817073457, recall=0.9043045277563231, macro_f1=0.9071952610789605, training_time=208.8323869999731, inference_time=2.546615200000815, avg_cpu=108.80338164251208, peak_cpu=573.9, avg_ram_mb=541.5506306475903, peak_ram_mb=543.68359375, peak_gpu_mb=707.791015625, peak_memory_mb=707.791015625, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613335714640, Architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=3, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=136, dropout=0.0434, activation='tanh', kernel_size=3, bidirectional=False, pooling=None)]), Fitness: EvaluationResult(accuracy=0.9818970932556679, precision=0.930601736456796, recall=0.8908172357355266, macro_f1=0.9071310954118014, training_time=399.4406348998891, inference_time=4.0635049000848085, avg_cpu=71.86126582278482, peak_cpu=487.2, avg_ram_mb=544.0273684418457, peak_ram_mb=544.90625, peak_gpu_mb=971.0244140625, peak_memory_mb=971.0244140625, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613335714448, Architecture: ArchitectureConfig(learning_rate=0.001801956185291575, num_layers=3, layers=[LayerConfig(layer_type='LSTM', hidden_size=173, dropout=0.4293, activation='elu', kernel_size=7, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=136, dropout=0.0434, activation='tanh', kernel_size=3, bidirectional=False, pooling='max')]), Fitness: EvaluationResult(accuracy=0.9821255211010222, precision=0.9584394379683319, recall=0.8774977737448684, macro_f1=0.9123365831986676, training_time=363.5303615999874, inference_time=4.724089100025594, avg_cpu=68.42631578947369, peak_cpu=490.7, avg_ram_mb=540.9136734958506, peak_ram_mb=546.7578125, peak_gpu_mb=717.61767578125, peak_memory_mb=717.61767578125, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613335712144, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=2, layers=[LayerConfig(layer_type='CNN', hidden_size=28, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=112, dropout=0.4068, activation='elu', kernel_size=7, bidirectional=False, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.9815544514876363, precision=0.9357860434212547, recall=0.8832918616530808, macro_f1=0.9059321002928102, training_time=18.445277399965562, inference_time=0.2274751999648288, avg_cpu=190.30540540540542, peak_cpu=476.1, avg_ram_mb=542.6890419407895, peak_ram_mb=543.890625, peak_gpu_mb=179.2421875, peak_memory_mb=543.890625, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613335708304, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.3107, activation='relu', kernel_size=5, bidirectional=True, pooling=None)]), Fitness: EvaluationResult(accuracy=0.9826394837530695, precision=0.9264555607769303, recall=0.8922533814527716, macro_f1=0.9065611572806184, training_time=306.9169976999983, inference_time=3.159528100048192, avg_cpu=82.49901153212521, peak_cpu=539.2, avg_ram_mb=541.1540720086349, peak_ram_mb=544.96875, peak_gpu_mb=968.30810546875, peak_memory_mb=968.30810546875, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613339290960, Architecture: ArchitectureConfig(learning_rate=0.0034363307099844025, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=28, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=134, dropout=0.3673, activation='relu', kernel_size=3, bidirectional=False, pooling=None), LayerConfig(layer_type='GRU', hidden_size=179, dropout=0.263, activation='elu', kernel_size=3, bidirectional=False, pooling='avg'), LayerConfig(layer_type='LSTM', hidden_size=20, dropout=0.0315, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='CNN', hidden_size=177, dropout=0.2939, activation='relu', kernel_size=3, bidirectional=True, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.97938438695677, precision=0.9297838057586165, recall=0.8708718237679808, macro_f1=0.895929993776261, training_time=99.56940699997358, inference_time=1.2047054000431672, avg_cpu=118.19187817258883, peak_cpu=499.4, avg_ram_mb=543.4293323863636, peak_ram_mb=544.1953125, peak_gpu_mb=306.41357421875, peak_memory_mb=544.1953125, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613335712432, Architecture: ArchitectureConfig(learning_rate=0.0034363307099844025, num_layers=1, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None)]), Fitness: EvaluationResult(accuracy=0.9795557078407858, precision=0.9140118421818137, recall=0.8794552271394351, macro_f1=0.8953700020827988, training_time=130.24673220003024, inference_time=0.9429526999592781, avg_cpu=114.19571984435797, peak_cpu=494.8, avg_ram_mb=527.4378028100775, peak_ram_mb=544.05859375, peak_gpu_mb=483.931640625, peak_memory_mb=544.05859375, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613337342800, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=2, layers=[LayerConfig(layer_type='CNN', hidden_size=56, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None)]), Fitness: EvaluationResult(accuracy=0.9814402375649591, precision=0.9384358021630448, recall=0.8818212164950466, macro_f1=0.9056793107943811, training_time=92.9050160999177, inference_time=1.1819556000409648, avg_cpu=119.80434782608695, peak_cpu=502.1, avg_ram_mb=510.37882179054054, peak_ram_mb=513.34375, peak_gpu_mb=379.81982421875, peak_memory_mb=513.34375, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613339293072, Architecture: ArchitectureConfig(learning_rate=0.001801956185291575, num_layers=2, layers=[LayerConfig(layer_type='LSTM', hidden_size=200, dropout=0.1877, activation='relu', kernel_size=7, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None)]), Fitness: EvaluationResult(accuracy=0.9808120609902347, precision=0.9063239531999615, recall=0.8981599943826858, macro_f1=0.8982870283847972, training_time=263.05489869997837, inference_time=2.4455141000216827, avg_cpu=106.66634615384615, peak_cpu=530.9, avg_ram_mb=511.09271533109404, peak_ram_mb=514.078125, peak_gpu_mb=812.77197265625, peak_memory_mb=812.77197265625, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613330137360, Architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None)]), Fitness: EvaluationResult(accuracy=0.9855519387813374, precision=0.9466922659987878, recall=0.906598041927732, macro_f1=0.92429609970171, training_time=311.15753600001335, inference_time=3.1939483999740332, avg_cpu=79.47341977309563, peak_cpu=504.2, avg_ram_mb=387.4325065736246, peak_ram_mb=390.29296875, peak_gpu_mb=968.30810546875, peak_memory_mb=968.30810546875, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+Population Architecture ID: 1613339295376, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=3, layers=[LayerConfig(layer_type='CNN', hidden_size=56, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.093, activation='relu', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='LSTM', hidden_size=136, dropout=0.0434, activation='tanh', kernel_size=3, bidirectional=False, pooling='max')]), Fitness: EvaluationResult(accuracy=0.9814973445262978, precision=0.9364003076332985, recall=0.8811235541426615, macro_f1=0.9061986220697327, training_time=136.30998360004742, inference_time=1.6925205000443384, avg_cpu=113.47074074074074, peak_cpu=503.1, avg_ram_mb=389.50043242619927, peak_ram_mb=390.265625, peak_gpu_mb=390.06396484375, peak_memory_mb=390.265625, failed=False, error=None)
+
+
+--------------------------------------------------------------------------------
+
+
+Subset Selection: 
+
+Parent Architecture ID: 1613339281168, Architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=3, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=25, dropout=0.2214, activation='elu', kernel_size=7, bidirectional=True, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.9808691679515733, precision=0.9408548594696245, recall=0.8622685939270479, macro_f1=0.8973668752041256, training_time=317.7605913999723, inference_time=3.2620960000203922, avg_cpu=79.28744038155803, peak_cpu=514.6, avg_ram_mb=890.9895089285715, peak_ram_mb=1114.734375, peak_gpu_mb=968.96435546875, peak_memory_mb=1114.734375, failed=False, error=None)
+
+
+Subset Selection: 
+
+Parent Architecture ID: 1613335712144, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=2, layers=[LayerConfig(layer_type='CNN', hidden_size=28, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=112, dropout=0.4068, activation='elu', kernel_size=7, bidirectional=False, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.9815544514876363, precision=0.9357860434212547, recall=0.8832918616530808, macro_f1=0.9059321002928102, training_time=18.445277399965562, inference_time=0.2274751999648288, avg_cpu=190.30540540540542, peak_cpu=476.1, avg_ram_mb=542.6890419407895, peak_ram_mb=543.890625, peak_gpu_mb=179.2421875, peak_memory_mb=543.890625, failed=False, error=None)
+
+
+Subset Selection: 
+
+Parent Architecture ID: 1613335590672, Architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='CNN', hidden_size=244, dropout=0.1422, activation='relu', kernel_size=5, bidirectional=True, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.9821826280623608, precision=0.922221724120132, recall=0.8934110102608315, macro_f1=0.9072718059770919, training_time=163.38915419997647, inference_time=1.2273400999838486, avg_cpu=111.92267080745341, peak_cpu=514.5, avg_ram_mb=768.1677752515479, peak_ram_mb=769.53515625, peak_gpu_mb=488.23046875, peak_memory_mb=769.53515625, failed=False, error=None)
+
+
+Subset Selection: 
+
+Parent Architecture ID: 1613339290960, Architecture: ArchitectureConfig(learning_rate=0.0034363307099844025, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=28, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=134, dropout=0.3673, activation='relu', kernel_size=3, bidirectional=False, pooling=None), LayerConfig(layer_type='GRU', hidden_size=179, dropout=0.263, activation='elu', kernel_size=3, bidirectional=False, pooling='avg'), LayerConfig(layer_type='LSTM', hidden_size=20, dropout=0.0315, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='CNN', hidden_size=177, dropout=0.2939, activation='relu', kernel_size=3, bidirectional=True, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.97938438695677, precision=0.9297838057586165, recall=0.8708718237679808, macro_f1=0.895929993776261, training_time=99.56940699997358, inference_time=1.2047054000431672, avg_cpu=118.19187817258883, peak_cpu=499.4, avg_ram_mb=543.4293323863636, peak_ram_mb=544.1953125, peak_gpu_mb=306.41357421875, peak_memory_mb=544.1953125, failed=False, error=None)
+
+
+
+
+================================================================================ Subset Selection Complete ================================================================================
+Considering Parent for Mutation: 
+
+Parent Architecture ID: 1613339281168, Architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=3, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=25, dropout=0.2214, activation='elu', kernel_size=7, bidirectional=True, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.9808691679515733, precision=0.9408548594696245, recall=0.8622685939270479, macro_f1=0.8973668752041256, training_time=317.7605913999723, inference_time=3.2620960000203922, avg_cpu=79.28744038155803, peak_cpu=514.6, avg_ram_mb=890.9895089285715, peak_ram_mb=1114.734375, peak_gpu_mb=968.96435546875, peak_memory_mb=1114.734375, failed=False, error=None)
+
+
+Mutation applied to parent: 
+
+mutation comparison: 
+
+Parent Architecture ID: 1613339281168, Architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=3, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=25, dropout=0.2214, activation='elu', kernel_size=7, bidirectional=True, pooling='avg')])
+--------------------------------------------------------------------------------
+Mutated Parent Architecture ID: 1613337825104, Architecture: ArchitectureConfig(learning_rate=0.0012848263391967694, num_layers=3, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=25, dropout=0.2214, activation='elu', kernel_size=7, bidirectional=True, pooling='avg')])
+
+
+Considering Parent for Mutation: 
+
+Parent Architecture ID: 1613335712144, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=2, layers=[LayerConfig(layer_type='CNN', hidden_size=28, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=112, dropout=0.4068, activation='elu', kernel_size=7, bidirectional=False, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.9815544514876363, precision=0.9357860434212547, recall=0.8832918616530808, macro_f1=0.9059321002928102, training_time=18.445277399965562, inference_time=0.2274751999648288, avg_cpu=190.30540540540542, peak_cpu=476.1, avg_ram_mb=542.6890419407895, peak_ram_mb=543.890625, peak_gpu_mb=179.2421875, peak_memory_mb=543.890625, failed=False, error=None)
+
+
+Mutation skipped for parent: 
+
+Considering Parent for Mutation: 
+
+Parent Architecture ID: 1613335590672, Architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='CNN', hidden_size=244, dropout=0.1422, activation='relu', kernel_size=5, bidirectional=True, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.9821826280623608, precision=0.922221724120132, recall=0.8934110102608315, macro_f1=0.9072718059770919, training_time=163.38915419997647, inference_time=1.2273400999838486, avg_cpu=111.92267080745341, peak_cpu=514.5, avg_ram_mb=768.1677752515479, peak_ram_mb=769.53515625, peak_gpu_mb=488.23046875, peak_memory_mb=769.53515625, failed=False, error=None)
+
+
+Mutation applied to parent: 
+
+mutation comparison: 
+
+Parent Architecture ID: 1613335590672, Architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='CNN', hidden_size=244, dropout=0.1422, activation='relu', kernel_size=5, bidirectional=True, pooling='avg')])
+--------------------------------------------------------------------------------
+Mutated Parent Architecture ID: 1613337826928, Architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling='max'), LayerConfig(layer_type='CNN', hidden_size=244, dropout=0.1422, activation='relu', kernel_size=5, bidirectional=True, pooling='avg')])
+
+
+Considering Parent for Mutation: 
+
+Parent Architecture ID: 1613339290960, Architecture: ArchitectureConfig(learning_rate=0.0034363307099844025, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=28, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=134, dropout=0.3673, activation='relu', kernel_size=3, bidirectional=False, pooling=None), LayerConfig(layer_type='GRU', hidden_size=179, dropout=0.263, activation='elu', kernel_size=3, bidirectional=False, pooling='avg'), LayerConfig(layer_type='LSTM', hidden_size=20, dropout=0.0315, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='CNN', hidden_size=177, dropout=0.2939, activation='relu', kernel_size=3, bidirectional=True, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.97938438695677, precision=0.9297838057586165, recall=0.8708718237679808, macro_f1=0.895929993776261, training_time=99.56940699997358, inference_time=1.2047054000431672, avg_cpu=118.19187817258883, peak_cpu=499.4, avg_ram_mb=543.4293323863636, peak_ram_mb=544.1953125, peak_gpu_mb=306.41357421875, peak_memory_mb=544.1953125, failed=False, error=None)
+
+
+Mutation skipped for parent: 
+
+Mutated Architecture ID: 1613337825104 added to mutated parents, Architecture: ArchitectureConfig(learning_rate=0.0012848263391967694, num_layers=3, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=25, dropout=0.2214, activation='elu', kernel_size=7, bidirectional=True, pooling='avg')])
+
+
+Mutated Architecture ID: 1613335712144 added to mutated parents, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=2, layers=[LayerConfig(layer_type='CNN', hidden_size=28, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=112, dropout=0.4068, activation='elu', kernel_size=7, bidirectional=False, pooling='avg')])
+
+
+Mutated Architecture ID: 1613337826928 added to mutated parents, Architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling='max'), LayerConfig(layer_type='CNN', hidden_size=244, dropout=0.1422, activation='relu', kernel_size=5, bidirectional=True, pooling='avg')])
+
+
+Mutated Architecture ID: 1613339290960 added to mutated parents, Architecture: ArchitectureConfig(learning_rate=0.0034363307099844025, num_layers=5, layers=[LayerConfig(layer_type='CNN', hidden_size=28, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='LSTM', hidden_size=134, dropout=0.3673, activation='relu', kernel_size=3, bidirectional=False, pooling=None), LayerConfig(layer_type='GRU', hidden_size=179, dropout=0.263, activation='elu', kernel_size=3, bidirectional=False, pooling='avg'), LayerConfig(layer_type='LSTM', hidden_size=20, dropout=0.0315, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='CNN', hidden_size=177, dropout=0.2939, activation='relu', kernel_size=3, bidirectional=True, pooling='avg')])
+
+
+================================================================================ Mutation Complete ================================================================================
+Crossover Phase: 
+
+Crossover Comparison: 
+
+Parent 1 Architecture ID: 1613337825104 selected for crossover, Architecture: ArchitectureConfig(learning_rate=0.0012848263391967694, num_layers=3, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=25, dropout=0.2214, activation='elu', kernel_size=7, bidirectional=True, pooling='avg')])
+--------------------------------------------------------------------------------
+Parent 2 Architecture ID: 1613335712144 selected for crossover, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=2, layers=[LayerConfig(layer_type='CNN', hidden_size=28, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=112, dropout=0.4068, activation='elu', kernel_size=7, bidirectional=False, pooling='avg')])
+
+
+Uniform crossover selected. 
+
+Crossover Results:
+
+Child Architecture ID: 1613339290672 created from crossover, Architecture: ArchitectureConfig(learning_rate=0.0012848263391967694, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=112, dropout=0.4068, activation='elu', kernel_size=7, bidirectional=False, pooling='avg')])
+
+
+Child Architecture ID: 1613339293552 created from crossover, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=2, layers=[LayerConfig(layer_type='CNN', hidden_size=28, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None)])
+
+
+================================================================================ Crossover Complete ================================================================================
+[eval 107] training 2-layer model...
+    -> macro_f1=0.8922 acc=0.9833  (152.2s train)
+
+
+[eval 108] training 2-layer model...
+    -> macro_f1=0.8959 acc=0.9790  (89.4s train)
+
+
+[eval 109] training 2-layer model...
+    -> macro_f1=0.8942 acc=0.9818  (148.3s train)
+
+
+
+
+Population Update Architecture ID: 1613339290672
+
+
+Population Update Architecture ID: 1613339293552
+
+
+Population Update Architecture ID: 1613337826928
+
+
+Population Update Architecture ID: 1613339290960
+
+
+Adding architecture ID: 1613339290672 to population, Architecture: ArchitectureConfig(learning_rate=0.0012848263391967694, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=112, dropout=0.4068, activation='elu', kernel_size=7, bidirectional=False, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.983267660327794, precision=0.9482150676567647, recall=0.8525830726122079, macro_f1=0.8922382867808301, training_time=152.1939869999187, inference_time=1.1601171999936923, avg_cpu=111.575, peak_cpu=545.0, avg_ram_mb=387.18576100498336, peak_ram_mb=389.20703125, peak_gpu_mb=607.09423828125, peak_memory_mb=607.09423828125, failed=False, error=None)
+Adding architecture ID: 1613339293552 to population, Architecture: ArchitectureConfig(learning_rate=0.0024257347520745447, num_layers=2, layers=[LayerConfig(layer_type='CNN', hidden_size=28, dropout=0.0096, activation='elu', kernel_size=3, bidirectional=True, pooling='max'), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None)]), Fitness: EvaluationResult(accuracy=0.9789846382273999, precision=0.8952979869116104, recall=0.8965996677107168, macro_f1=0.8958659934227617, training_time=89.39096370001789, inference_time=1.1789183999644592, avg_cpu=119.83988764044943, peak_cpu=502.6, avg_ram_mb=389.14381110335194, peak_ram_mb=389.55078125, peak_gpu_mb=367.34423828125, peak_memory_mb=389.55078125, failed=False, error=None)
+Adding architecture ID: 1613337826928 to population, Architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling='max'), LayerConfig(layer_type='CNN', hidden_size=244, dropout=0.1422, activation='relu', kernel_size=5, bidirectional=True, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.9818399862943292, precision=0.9231699459712324, recall=0.8790127545691032, macro_f1=0.8942201582232758, training_time=148.2606117000105, inference_time=1.1464634999865666, avg_cpu=111.16245733788395, peak_cpu=521.7, avg_ram_mb=388.5374681122449, peak_ram_mb=390.60546875, peak_gpu_mb=488.23046875, peak_memory_mb=488.23046875, failed=False, error=None)
+Removing architecture ID: 1613339290672 from population, Architecture: ArchitectureConfig(learning_rate=0.0012848263391967694, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=112, dropout=0.4068, activation='elu', kernel_size=7, bidirectional=False, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.983267660327794, precision=0.9482150676567647, recall=0.8525830726122079, macro_f1=0.8922382867808301, training_time=152.1939869999187, inference_time=1.1601171999936923, avg_cpu=111.575, peak_cpu=545.0, avg_ram_mb=387.18576100498336, peak_ram_mb=389.20703125, peak_gpu_mb=607.09423828125, peak_memory_mb=607.09423828125, failed=False, error=None)
+Removing architecture ID: 1613339288656 from population, Architecture: ArchitectureConfig(learning_rate=0.0041434801184385035, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=124, dropout=0.0394, activation='tanh', kernel_size=3, bidirectional=False, pooling='avg'), LayerConfig(layer_type='CNN', hidden_size=244, dropout=0.1372, activation='relu', kernel_size=5, bidirectional=True, pooling=None)]), Fitness: EvaluationResult(accuracy=0.9795557078407858, precision=0.9195914836169641, recall=0.8758839793868315, macro_f1=0.8940606324028695, training_time=33.78844829997979, inference_time=0.3647168999304995, avg_cpu=150.0358208955224, peak_cpu=483.4, avg_ram_mb=539.7926240808823, peak_ram_mb=541.11328125, peak_gpu_mb=335.015625, peak_memory_mb=541.11328125, failed=False, error=None)
+Removing architecture ID: 1613337826928 from population, Architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling='max'), LayerConfig(layer_type='CNN', hidden_size=244, dropout=0.1422, activation='relu', kernel_size=5, bidirectional=True, pooling='avg')]), Fitness: EvaluationResult(accuracy=0.9818399862943292, precision=0.9231699459712324, recall=0.8790127545691032, macro_f1=0.8942201582232758, training_time=148.2606117000105, inference_time=1.1464634999865666, avg_cpu=111.16245733788395, peak_cpu=521.7, avg_ram_mb=388.5374681122449, peak_ram_mb=390.60546875, peak_gpu_mb=488.23046875, peak_memory_mb=488.23046875, failed=False, error=None)
+================================================================================
+13568.343981742859 seconds elapsed
+Best architecture: ArchitectureConfig(learning_rate=0.0021276345553925863, num_layers=2, layers=[LayerConfig(layer_type='GRU', hidden_size=129, dropout=0.228, activation='tanh', kernel_size=5, bidirectional=True, pooling=None), LayerConfig(layer_type='GRU', hidden_size=182, dropout=0.0294, activation='relu', kernel_size=5, bidirectional=True, pooling=None)]), Fitness: EvaluationResult(accuracy=0.9855519387813374, precision=0.9466922659987878, recall=0.906598041927732, macro_f1=0.92429609970171, training_time=311.15753600001335, inference_time=3.1939483999740332, avg_cpu=79.47341977309563, peak_cpu=504.2, avg_ram_mb=387.4325065736246, peak_ram_mb=390.29296875, peak_gpu_mb=968.30810546875, peak_memory_mb=968.30810546875, failed=False, error=None)
